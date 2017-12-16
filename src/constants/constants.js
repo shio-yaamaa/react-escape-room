@@ -1,0 +1,1 @@
+export const arrowAreaWidth = 50;
