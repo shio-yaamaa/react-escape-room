@@ -12,7 +12,7 @@ export const selectItem = itemName => {
 export const selectedItem = (state = null, action) => {
 	switch (action.type) {
 		case 'SELECT_ITEM':
-			return action.itemName;
+			return state === action.itemName ? null : action.itemName;
 		default:
 			return state;
 	}

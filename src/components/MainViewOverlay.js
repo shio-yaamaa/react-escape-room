@@ -22,7 +22,9 @@ class MainViewOverlay extends React.Component {
 			<canvas
 				ref={canvas => this.canvas = canvas}
 				style={{
-					position: 'absolute'
+					position: 'absolute',
+					top: 0,
+					left: 0
 				}}
 				width={480}
 				height={380}

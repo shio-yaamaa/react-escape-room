@@ -11,7 +11,7 @@ const mapStateToProps = state => {
 	Object.keys(state.items).forEach(itemName => {
 		const item = state.items[itemName];
 		if (item.obtainStatus === 'OBTAINED') {
-			itemFrames[item.frameindex] = {
+			itemFrames[item.frameIndex] = {
 				itemName: itemName,
 				selected: state.selectedItem === itemName
 			};
@@ -24,7 +24,7 @@ const mapStateToProps = state => {
 const mapDispatchToProps = dispatch => {
 	return {
 		onItemSelect: (itemName) => {
-			dispatch(selectItem('itemName'));
+			dispatch(selectItem(itemName));
 		}
 	};
 };

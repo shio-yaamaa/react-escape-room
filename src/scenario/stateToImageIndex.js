@@ -114,7 +114,7 @@ const stateToImageIndex = (perspective, status, items) => {
 				case 'STICK':
 					return '01';
 				case 'KEY_FOUND':
-					return '02';
+					return items.keyToBox.obtainStatus === 'NOT_OBTAINED' ? '02' : '00';
 				default:
 					return;
 			}

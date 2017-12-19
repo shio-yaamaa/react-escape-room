@@ -1,21 +1,33 @@
 import React from 'react'
 import PropTypes from 'prop-types'
+import {itemFrameSize} from '../constants/constants';
 
 const ItemFrame = ({itemName, selected, onItemSelect}) => (
 	<div
-		className={itemName === null ? '' : 'item-frame-with-item'}
+		className={
+			itemName === null
+				? 'empty-item-frame'
+				: (selected ? 'selected-item-frame' : 'unselected-item-frame')
+		}
 		style={{
-			width: 45,
-			height: 45,
+			boxSizing: 'content-box',
+			width: itemFrameSize,
+			height: itemFrameSize,
 			margin: 2,
-			borderRadius: 5,
-			backgroundColor: itemName === null ? '#555555' : 'white',
-			border: '3px solid ' + selected ? 'orange' : 'transparent'
+			borderRadius: 5
+		}}
+		onClick={() => {
+			if (itemName !== null) {
+				onItemSelect(itemName);
+			}
 		}}
 	>
 		{itemName !== null && <img
 			src={require(`../assets/images/items/${itemName}.png`)}
-			onClick={() => onItemSelect(itemName)}
+			width={itemFrameSize}
+			style={{
+				pointerEvents: 'none'
+			}}
 			alt=""
 		/>}
 	</div>
@@ -25,6 +37,6 @@ ItemFrame.propTypes = {
 	selected: PropTypes.bool.isRequired,
 	itemName: PropTypes.string, // nullable
 	onItemSelect: PropTypes.func.isRequired
-}
+};
 
 export default ItemFrame;

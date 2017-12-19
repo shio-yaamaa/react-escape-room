@@ -42,6 +42,7 @@ export const items = (state = initialItems, action) => {
       const frameIndex = Object.values(state)
         .map(item => item.frameIndex)
         .reduce((prev, curr) => (prev === curr ? curr + 1 : prev), 0);
+      console.log(frameIndex);
       return Object.assign({}, state, {
         [action.itemName]: {
           obtainStatus: 'OBTAINED',

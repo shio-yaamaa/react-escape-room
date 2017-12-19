@@ -14,7 +14,7 @@ const arrowDirections = {
 	'upperDrawer': zoomed,
 	'carpet': zoomed,
 	'locker': zoomed,
-	'tissue': zoomed,
+	'tissueBox': zoomed,
 	'dial': zoomed,
 	'viewWithDoor': normal,
 	'hangingPlant': zoomed

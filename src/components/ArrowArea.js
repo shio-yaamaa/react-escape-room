@@ -1,15 +1,15 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import {arrowAreaWidth} from '../constants/constants';
+import {arrowAreaWidth, arrowSize} from '../constants/constants';
 import arrowImage from '../assets/images/arrow.svg';
 
 class ArrowArea extends React.Component {
-	startAnimation() {
-		this.arrow.classList.add('arrow-animation');
+	startAnimation(direction) {
+		this.arrow.classList.add(direction.toLowerCase() + '-arrow-animation');
 	}
 
-	stopAnimation() {
-		this.arrow.classList.remove('arrow-animation');
+	stopAnimation(direction) {
+		this.arrow.classList.remove(direction.toLowerCase() + '-arrow-animation');
 	}
 
 	directionToAttrs(direction) {
@@ -42,10 +42,12 @@ class ArrowArea extends React.Component {
 		const isSide = this.props.direction === 'LEFT'
 			|| this.props.direction === 'RIGHT';
 		const style = {
+			display: 'flex',
+  		justifyContent: 'center',
+  		alignItems: 'center',
 			position: 'absolute',
 			width: isSide ? arrowAreaWidth : '100%',
-			height: isSide ? '100%' : arrowAreaWidth,
-			border: '1px solid black'
+			height: isSide ? '100%' : arrowAreaWidth
 		};
 		this.directionToAttrs(this.props.direction).forEach(attr => {
 			style[attr] = 0;
@@ -55,13 +57,17 @@ class ArrowArea extends React.Component {
 			<div
 				style={style}
 				onClick={() => this.props.onArrowClick(this.props.direction)}
-				onMouseOver={() => this.startAnimation()}
-				onMouseLeave={() => this.stopAnimation()}
+				onMouseOver={() => this.startAnimation(this.props.direction)}
+				onMouseLeave={() => this.stopAnimation(this.props.direction)}
 			>
 				<img
 					ref={arrow => this.arrow = arrow}
 					src={arrowImage}
-					style={{transform: `rotate(${this.directionToDeg(this.props.direction)})`}}
+					width={arrowSize}
+					style={{
+						display: 'block',
+						transform: `rotate(${this.directionToDeg(this.props.direction)})`
+					}}
 					alt=""
 				/>
 			</div>

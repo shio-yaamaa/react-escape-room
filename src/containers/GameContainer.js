@@ -4,6 +4,7 @@ import Game from '../components/Game';
 
 const mapStateToProps = state => {
 	return {
+		selectedItem: state.selectedItem,
 		isSaved: state.gameControl.isSaved,
 		hint: state.gameControl.hint
 	};
@@ -12,9 +13,11 @@ const mapStateToProps = state => {
 const mapDispatchToProps = dispatch => {
 	return {
 		onSaveClick: () => {
+			console.log('save is clicked');
 			dispatch(save());
 		},
 		onHintClick: () => {
+			console.log('hint is clicked');
 			dispatch(showHint());
 		},
 		onHintCancel: () => {

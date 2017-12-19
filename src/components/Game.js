@@ -4,11 +4,14 @@ import MainScreenContainer from '../containers/MainScreenContainer';
 import Sidebar from './Sidebar';
 import Hint from './Hint';
 
-const Game = ({isSaved, hint, onSaveClick, onHintClick, onHintCancel}) => (
+//import stick from '../assets/images/items/stick.png';
+
+const Game = ({selectedItem, isSaved, hint, onSaveClick, onHintClick, onHintCancel}) => (
 	<div style={{
 		position: 'relative',
 		width: '100%',
-		height: '100%'
+		height: '100%'/*,
+		cursor: `url(${stick}) 40 40, auto`*/
 	}}>
 		<div style={{
 			display: 'flex',
@@ -37,6 +40,7 @@ const Game = ({isSaved, hint, onSaveClick, onHintClick, onHintCancel}) => (
 );
 
 Game.propTypes = {
+	selectedItem: PropTypes.string, // nullable
 	isSaved: PropTypes.bool.isRequired,
 	hint: PropTypes.string, // nullable
 	onSaveClick: PropTypes.func.isRequired,

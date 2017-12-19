@@ -4,7 +4,7 @@ import GameContainer from '../containers/GameContainer';
 class ScreenSwitch extends React.Component {
 	render() {
 		return (
-			<div style={{
+			<div id="screen-switch" style={{
 				width: 590,
 				height: 380,
 				marginLeft: 'auto',
