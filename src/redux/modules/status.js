@@ -69,9 +69,9 @@ export const status = (state = initialStatus, action) => {
 					})
 			});
 		case 'INCREMENT_DIAL_NUMBER':
-			const firstDigit  = (state.retainedStatus.dialNumber[0] + action.digit === 0 ? 1 : 0) % 10;
-			const secondDigit = (state.retainedStatus.dialNumber[1] + action.digit === 1 ? 1 : 0) % 10;
-			const thirdDigit  = (state.retainedStatus.dialNumber[2] + action.digit === 2 ? 1 : 0) % 10;
+			const firstDigit  = (state.retainedStatus.dialNumber[0] + (action.digit === 0 ? 1 : 0)) % 10;
+			const secondDigit = (state.retainedStatus.dialNumber[1] + (action.digit === 1 ? 1 : 0)) % 10;
+			const thirdDigit  = (state.retainedStatus.dialNumber[2] + (action.digit === 2 ? 1 : 0)) % 10;
 			return Object.assign({}, state, {
 				retainedStatus: Object.assign({}, state.retainedStatus, {
 					dialNumber: [firstDigit, secondDigit, thirdDigit]

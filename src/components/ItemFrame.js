@@ -1,6 +1,6 @@
-import React from 'react'
-import PropTypes from 'prop-types'
-import {itemFrameSize} from '../constants/constants';
+import React from 'react';
+import PropTypes from 'prop-types';
+import {itemFrameSize, itemFrameMargin} from '../constants/constants';
 
 const ItemFrame = ({itemName, selected, onItemSelect}) => (
 	<div
@@ -13,7 +13,7 @@ const ItemFrame = ({itemName, selected, onItemSelect}) => (
 			boxSizing: 'content-box',
 			width: itemFrameSize,
 			height: itemFrameSize,
-			margin: 2,
+			margin: itemFrameMargin,
 			borderRadius: 5
 		}}
 		onClick={() => {

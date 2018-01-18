@@ -2,7 +2,7 @@
 
 const initialGameControl = {
   isSaved: false,
-	hint: null
+	isHintVisible: false
 }
 
 // Action creators
@@ -19,9 +19,9 @@ export const showHint = () => {
 	};
 };
 
-export const cancelHint = () => {
+export const hideHint = () => {
   return {
-    type: 'CANCEL_HINT'
+    type: 'HIDE_HINT'
   };
 }
 
@@ -31,18 +31,18 @@ export const gameControl = (state = initialGameControl, action) => {
   switch (action.type) {
     case 'SAVE':
     	return {
-    		hint: state.hint,
-    		isSaved: true
+    		isSaved: true,
+        isHintVisible: state.isHintVisible
     	};
     case 'SHOW_HINT':
       return {
-        hint: '頑張ってね', // scenario/hintsから
-        isSaved: state.isSaved
+        isSaved: state.isSaved,
+        isHintVisible: true
       };
-    case 'CANCEL_HINT':
+    case 'HIDE_HINT':
       return {
-        hint: null,
-        isSaved: state.isSaved
+        isSaved: state.isSaved,
+        isHintVisible: false
       };
     default:
     	return state;

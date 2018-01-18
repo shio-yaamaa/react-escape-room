@@ -74,12 +74,12 @@ body {
 }
 
 .button {
-  border-radius: 5px;
+  text-align: center;
+  vertical-align: middle;
   color: white;
-  background-color: gray;
   cursor: pointer;
 }
 
 .button:hover {
-  background-color: lightgray;
+  color: lightgray;
 }

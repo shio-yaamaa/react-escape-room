@@ -41,8 +41,8 @@ export const items = (state = initialItems, action) => {
     case 'OBTAIN_ITEM':
       const frameIndex = Object.values(state)
         .map(item => item.frameIndex)
+        .sort((frameIndex1, frameIndex2) => frameIndex1 - frameIndex2)
         .reduce((prev, curr) => (prev === curr ? curr + 1 : prev), 0);
-      console.log(frameIndex);
       return Object.assign({}, state, {
         [action.itemName]: {
           obtainStatus: 'OBTAINED',

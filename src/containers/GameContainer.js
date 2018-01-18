@@ -1,12 +1,13 @@
 import {connect} from 'react-redux';
-import {save, showHint, cancelHint} from '../redux/modules/gameControl'
+import {save, showHint, hideHint} from '../redux/modules/gameControl';
 import Game from '../components/Game';
+import stateToHint from '../scenario/stateToHint';
 
 const mapStateToProps = state => {
 	return {
 		selectedItem: state.selectedItem,
 		isSaved: state.gameControl.isSaved,
-		hint: state.gameControl.hint
+		hint: state.gameControl.isHintVisible ? stateToHint(state.status, state.items) : null
 	};
 };
 
@@ -17,11 +18,10 @@ const mapDispatchToProps = dispatch => {
 			dispatch(save());
 		},
 		onHintClick: () => {
-			console.log('hint is clicked');
 			dispatch(showHint());
 		},
 		onHintCancel: () => {
-			dispatch(cancelHint());
+			dispatch(hideHint());
 		}
 	}
 };

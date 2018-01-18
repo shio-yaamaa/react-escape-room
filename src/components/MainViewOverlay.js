@@ -2,9 +2,14 @@ import React from 'react';
 import PropTypes from 'prop-types';
 
 class MainViewOverlay extends React.Component {
-	componentDidMount() {
-		const context = this.canvas.getContext('2d');
-		this.props.mainViewOverlays.forEach((overlay) => {
+	shouldComponentUpdate(nextProps) {
+		const context = this.canvas.getContext('2d'); // componentDidMountでやっても使いまわしできない
+
+		// reset
+		context.clearRect(0, 0, this.canvas.width, this.canvas.height);
+
+		// draw
+		nextProps.mainViewOverlays.forEach((overlay) => {
 			const image = new Image();
 			image.onload = () => {
 				context.drawImage(
@@ -13,8 +18,9 @@ class MainViewOverlay extends React.Component {
 					image.width * overlay.scale, image.height * overlay.scale
 				);
 			};
-			image.src = `../assets/images/mainViewOverlays${overlay.image}.png`;
+			image.src = require(`../assets/images/mainViewOverlays/${overlay.image}.png`);
 		});
+		return false;
 	}
 
 	render() {

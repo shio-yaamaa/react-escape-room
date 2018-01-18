@@ -10,7 +10,7 @@ const calculateOverlays = state => {
 	if (state.perspective === 'dial') {
 		state.status.retainedStatus.dialNumber.forEach((number, index) => {
 			mainViewOverlays.push({
-				image: `dial_${number}`,
+				image: `dial${number}`,
 				pos: [20 + 50 * index, 50],
 				scale: 1
 			});

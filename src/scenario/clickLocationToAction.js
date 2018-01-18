@@ -129,7 +129,7 @@ const clickLocationToAction = (dispatch, perspective, mapIndex, location, status
 					if (status.retainedStatus.window === 'CURTAIN_CLOSED') {
 						dispatch(changeStatus(true, 'window', 'CURTAIN_OPEN'));
 						playSound('curtain');
-					} else {
+					} else if (status.retainedStatus.window === 'CURTAIN_OPEN') { // Boardがあるときはカーテン閉められない
 						dispatch(changeStatus(true, 'window', 'CURTAIN_CLOSED'));
 						playSound('curtain');
 					}
