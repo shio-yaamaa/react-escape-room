@@ -13,6 +13,8 @@ export const perspective = (state = 'viewWithSofa', action) => {
 	switch (action.type) {
 		case 'CHANGE_PERSPECTIVE':
 			return action.perspective;
+		case 'LOAD':
+			return action.state.perspective;
 		default:
 			return state;
 	}

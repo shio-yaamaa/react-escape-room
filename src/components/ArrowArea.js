@@ -1,7 +1,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import {arrowAreaWidth, arrowSize} from '../constants/constants';
-import arrowImage from '../assets/images/arrow.svg';
+import {arrowImage} from '../utils/AssetsLoader';
 
 class ArrowArea extends React.Component {
 	startAnimation(direction) {
@@ -62,7 +62,7 @@ class ArrowArea extends React.Component {
 			>
 				<img
 					ref={arrow => this.arrow = arrow}
-					src={arrowImage}
+					src={arrowImage.src}
 					width={arrowSize}
 					style={{
 						display: 'block',

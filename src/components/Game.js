@@ -1,51 +1,99 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import MainScreenContainer from '../containers/MainScreenContainer';
+import {connect} from 'react-redux';
+import {showHint, hideHint} from '../redux/modules/gameControl';
+import MainScreen from './MainScreen';
 import Sidebar from './Sidebar';
 import Hint from './Hint';
+import stateToHint from '../scenario/stateToHint';
+import {sounds} from '../utils/AssetsLoader';
 
-//import stick from '../assets/images/items/stick.png';
+// Component
 
-const Game = ({selectedItem, isSaved, hint, onSaveClick, onHintClick, onHintCancel}) => (
-	<div style={{
-		position: 'relative',
-		width: '100%',
-		height: '100%'/*,
-		cursor: `url(${stick}) 40 40, auto`*/
-	}}>
-		<div style={{
-			display: 'flex',
-			position: 'absolute',
-			left: 0,
-			top: 0,
-			width: '100%',
-			height: '100%'
-		}}>
-			<MainScreenContainer />
-			<Sidebar
-				onSaveClick={onSaveClick}
-				onHintClick={onHintClick}
-			/>
-		</div>
-		{hint !== null && <Hint hint={hint} onHintCancel={onHintCancel} />}
-		<div id="save_effect" style={{
-			position: 'absolute',
-			left: 0,
-			top: 0,
-			width: '100%',
-			height: '100%',
-			pointerEvents: 'none'
-		}}></div>
-	</div>
-);
+class Game extends React.Component {
+	componentDidMount() {
+		this.saveEffect.addEventListener('animationend', () => {
+			this.saveEffect.classList.remove('animation');
+		});
+	}
+
+	handleSave() {
+		sounds['save'].play();
+		this.saveEffect.classList.add('animation');
+		localStorage.setItem('savedData', JSON.stringify(this.props.stateToSave))
+	}
+
+	render() {
+		return (
+			<div style={{
+				position: 'relative',
+				width: '100%',
+				height: '100%'/*,
+				cursor: `url(${stick}) 40 40, auto`*/
+			}}>
+				<div style={{
+					display: 'flex',
+					position: 'absolute',
+					left: 0,
+					top: 0,
+					width: '100%',
+					height: '100%'
+				}}>
+					<MainScreen />
+					<Sidebar
+						onSaveClick={this.handleSave.bind(this)}
+						onHintClick={this.props.onHintClick}
+					/>
+				</div>
+				{this.props.hint !== null && <Hint hint={this.props.hint} onHintCancel={this.props.onHintCancel} />}
+				<div
+					id="save-effect"
+					style={{
+						position: 'absolute',
+						left: 0,
+						top: 0,
+						width: '100%',
+						height: '100%',
+						backgroundColor: 'transparent',
+						pointerEvents: 'none'
+					}}
+					ref={saveEffect => this.saveEffect = saveEffect}
+				></div>
+			</div>
+		);
+	}
+}
 
 Game.propTypes = {
 	selectedItem: PropTypes.string, // nullable
-	isSaved: PropTypes.bool.isRequired,
+	stateToSave: PropTypes.object.isRequired,
 	hint: PropTypes.string, // nullable
-	onSaveClick: PropTypes.func.isRequired,
 	onHintClick: PropTypes.func.isRequired,
 	onHintCancel: PropTypes.func.isRequired
 };
 
-export default Game;
+// Container
+
+const mapStateToProps = state => {
+	return {
+		selectedItem: state.selectedItem,
+		stateToSave: state,
+		hint: state.gameControl.isHintVisible ? stateToHint(state.status, state.items) : null
+	};
+};
+
+const mapDispatchToProps = dispatch => {
+	return {
+		onHintClick: () => {
+			dispatch(showHint());
+		},
+		onHintCancel: () => {
+			dispatch(hideHint());
+		}
+	}
+};
+
+export default connect(
+	mapStateToProps,
+	mapDispatchToProps
+)(Game);

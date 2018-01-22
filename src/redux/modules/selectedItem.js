@@ -13,6 +13,8 @@ export const selectedItem = (state = null, action) => {
 	switch (action.type) {
 		case 'SELECT_ITEM':
 			return state === action.itemName ? null : action.itemName;
+		case 'LOAD':
+			return action.state.selectedItem;
 		default:
 			return state;
 	}

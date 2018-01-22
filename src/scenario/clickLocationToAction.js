@@ -2,12 +2,14 @@ import {changePerspective} from '../redux/modules/perspective';
 import {changeStatus, incrementDialNumber, resetTemporalStatus} from '../redux/modules/status';
 import {obtainItem, useItem} from '../redux/modules/items';
 import {selectItem} from '../redux/modules/selectedItem';
+import isDialNumberCorrect from '../utils/isDialNumberCorrect';
+import {sounds} from '../utils/AssetsLoader';
 
 // 観葉植物に棒を突っ込んでいる間は、下矢印を押されても無視
 // mapIndexはstringなことに注意
 
-const playSound = (fileName) => {
-	new Audio(require(`../assets/sounds/${fileName}.mp3`)).play();
+const playSound = (filename) => {
+	sounds[filename].play();
 };
 
 const clickLocationToAction = (dispatch, perspective, mapIndex, location, status, items, selectedItem) => {
@@ -190,11 +192,11 @@ const clickLocationToAction = (dispatch, perspective, mapIndex, location, status
 						dispatch(useItem('keyToBox'));
 						dispatch(selectItem(null));
 						playSound('unlock');
-					} else if (status.retainedStatus.box === 'UNLOCKED' && status.temporalStatus.box === 'CLOSED') {
+					} else if (status.retainedStatus.box === 'LOCKED') {
+						playSound('locked');
+					} else if (status.temporalStatus.box === 'CLOSED') {
 						dispatch(changeStatus(false, 'box', 'OPEN'));
 						playSound('openBox');
-					} else {
-						playSound('locked');
 					}
 					return;
 				case 'NAVY': // the lid of the box
@@ -208,15 +210,15 @@ const clickLocationToAction = (dispatch, perspective, mapIndex, location, status
 						dispatch(changeStatus(true, 'box', 'UNLOCKED'));
 						dispatch(useItem('keyToBox'));
 						dispatch(selectItem(null));
-						playSound('unlock')
-					} else if (status.retainedStatus.box === 'UNLOCKED' && status.temporalStatus.box === 'CLOSED') {
+						playSound('unlock');
+					} else if (status.retainedStatus.box === 'LOCKED') {
+						playSound('locked');
+					} else if (status.temporalStatus.box === 'CLOSED') {
 						dispatch(changeStatus(false, 'box', 'OPEN'));
-						playSound('openBox')
-					} else if (status.temporalStatus.box === 'OPEN' && items.screwdriver.obtainStatus === 'NOT_OBTAINED') {
+						playSound('openBox');
+					} else if (items.screwdriver.obtainStatus === 'NOT_OBTAINED') {
 						dispatch(obtainItem('screwdriver'));
 						playSound('obtainItem');
-					} else {
-						playSound('locked');
 					}
 					return;
 				default:
@@ -432,7 +434,8 @@ const clickLocationToAction = (dispatch, perspective, mapIndex, location, status
 							dispatch(changePerspective('dial'));
 							return;
 						case 'GREEN': // locker2
-							if (status.retainedStatus.dialNumber.toString() === [3, 1, 4].toString()) { // flag
+							if (isDialNumberCorrect(status.retainedStatus.dialNumber)
+								&& (status.retainedStatus.window === 'BOARD1_2' || status.retainedStatus.window === 'BOARD2_1')) {
 								if (status.retainedStatus.locker2 === 'LOCKED') {
 									dispatch(changeStatus(true, 'locker2', 'UNLOCKED'));
 									playSound('unlock'); // ?
@@ -477,7 +480,8 @@ const clickLocationToAction = (dispatch, perspective, mapIndex, location, status
 							dispatch(changePerspective('dial'));
 							return;
 						case 'GREEN': // locker2
-							if (status.retainedStatus.dialNumber.toString() === [3, 1, 4].toString()) { // flag
+							if (isDialNumberCorrect(status.retainedStatus.dialNumber)
+								&& (status.retainedStatus.window === 'BOARD1_2' || status.retainedStatus.window === 'BOARD2_1')) {
 								if (status.retainedStatus.locker2 === 'LOCKED') {
 									dispatch(changeStatus(true, 'locker2', 'UNLOCKED'));
 									playSound('unlock');
@@ -594,7 +598,8 @@ const clickLocationToAction = (dispatch, perspective, mapIndex, location, status
 							dispatch(changePerspective('dial'));
 							return;
 						case 'GREEN': // locker2
-							if (status.retainedStatus.dialNumber.toString() === [3, 1, 4].toString()) { // flag
+							if (isDialNumberCorrect(status.retainedStatus.dialNumber)
+								&& (status.retainedStatus.window === 'BOARD1_2' || status.retainedStatus.window === 'BOARD2_1')) {
 								if (status.retainedStatus.locker2 === 'LOCKED') {
 									dispatch(changeStatus(true, 'locker2', 'UNLOCKED'));
 									playSound('unlock');
@@ -671,13 +676,14 @@ const clickLocationToAction = (dispatch, perspective, mapIndex, location, status
 						dispatch(useItem('keyToDoor'));
 						dispatch(selectItem(null));
 						playSound('unlock');
-					} else if (status.retainedStatus.door === 'UNLOCKED') {
-						dispatch(changeStatus(false, 'door', 'OPEN'));
-						playSound('openDoor');
-					} else if (status.temporalStatus.door === 'CLOSED') {
+					} else if (status.retainedStatus.door === 'LOCKED') {
 						playSound('locked');
-					} else {
+					} else if (status.temporalStatus.door === 'CLOSED') { // UNLOCKED & CLOSED
+						dispatch(changeStatus(false, 'door', 'OPEN'));
+						playSound('door');
+					} else { // UNLOCKED & OPEN
 						// game clear!
+						console.log('game clear!!!');
 					}
 					return;
 				case 'NAVY': // opened part of door
@@ -686,14 +692,14 @@ const clickLocationToAction = (dispatch, perspective, mapIndex, location, status
 						dispatch(useItem('keyToDoor'));
 						dispatch(selectItem(null));
 						playSound('unlock');
-					} else if (status.retainedStatus.door === 'UNLOCKED') {
-						dispatch(changeStatus(false, 'door', 'OPEN'));
-						playSound('openDoor');
-					} else if (status.temporalStatus.door === 'OPEN') {
-						dispatch(changeStatus(false, 'door', 'CLOSED'));
-						playSound('closeDoor');
-					} else {
+					} else if (status.retainedStatus.door === 'LOCKED') {
 						playSound('locked');
+					} else if (status.temporalStatus.door === 'CLOSED') { // UNLOCKED & CLOSED
+						dispatch(changeStatus(false, 'door', 'OPEN'));
+						playSound('door');
+					} else { // UNLOCKED & OPEN
+						dispatch(changeStatus(false, 'door', 'CLOSED'));
+						playSound('door');
 					}
 					return;
 				case 'BLUE': // hanging plant

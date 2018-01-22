@@ -1,10 +1,11 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import {mainViewBorderRadius} from '../constants/constants';
+import {mainViewImages} from '../utils/AssetsLoader';
 
 const MainView = ({mainViewImage}) => (
 	<img
-		src={require(`../assets/images/mainViews/${mainViewImage}.png`)}
+		src={mainViewImages[mainViewImage].src}
 		style={{
 			borderRadius: mainViewBorderRadius
 		}}

@@ -6,16 +6,9 @@ import rootReducer from './redux/rootReducer';
 import App from './components/App';
 import registerServiceWorker from './registerServiceWorker';
 import './index.css';
+import './utils/AssetsLoader';
 
 let store = createStore(rootReducer);
-
-// require assets
-const requireAll = (context) => {
-	console.log(context.keys());
-  context.keys().forEach(context);
-}
-requireAll(require.context('./assets/images', true, /\.png$/));
-requireAll(require.context('./assets/sounds', false, /\.mp3$/));
 
 ReactDOM.render(
 	<Provider store={store}>

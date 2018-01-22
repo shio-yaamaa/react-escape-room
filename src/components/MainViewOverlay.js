@@ -2,6 +2,18 @@ import React from 'react';
 import PropTypes from 'prop-types';
 
 class MainViewOverlay extends React.Component {
+	constructor(props) {
+		super(props);
+		this.mainViewOverlayImages = {};
+
+		// load dial images
+		for (let i = 0; i < 10; i++) {
+			const imageName = 'dial' + i;
+			this.mainViewOverlayImages[imageName] = new Image();
+			this.mainViewOverlayImages[imageName].src = require(`../assets/images/mainViewOverlays/${imageName}.svg`);
+		}
+	}
+
 	shouldComponentUpdate(nextProps) {
 		const context = this.canvas.getContext('2d'); // componentDidMountでやっても使いまわしできない
 
@@ -10,15 +22,16 @@ class MainViewOverlay extends React.Component {
 
 		// draw
 		nextProps.mainViewOverlays.forEach((overlay) => {
-			const image = new Image();
-			image.onload = () => {
-				context.drawImage(
-					image,
-					overlay.pos[0], overlay.pos[1],
-					image.width * overlay.scale, image.height * overlay.scale
-				);
-			};
-			image.src = require(`../assets/images/mainViewOverlays/${overlay.image}.png`);
+			const image = this.mainViewOverlayImages[overlay.image];
+			const pos = [
+				overlay.isCenterPos ? overlay.pos[0] - image.width * overlay.scale / 2 : overlay.pos[0],
+				overlay.isCenterPos ? overlay.pos[1] - image.height * overlay.scale / 2 : overlay.pos[1]
+			];
+			context.drawImage(
+				image,
+				pos[0], pos[1],
+				image.width * overlay.scale, image.height * overlay.scale
+			);
 		});
 		return false;
 	}
@@ -44,6 +57,7 @@ MainViewOverlay.propTypes = {
 		PropTypes.shape({
       image: PropTypes.string,
       pos: PropTypes.arrayOf(PropTypes.number),
+      isCenterPos: PropTypes.bool,
       scale: PropTypes.number
     })
 	).isRequired

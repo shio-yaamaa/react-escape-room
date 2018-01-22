@@ -73,13 +73,20 @@ body {
   border: 2px solid white;
 }
 
-.button {
-  text-align: center;
-  vertical-align: middle;
-  color: white;
-  cursor: pointer;
+.button:hover {
+  text-shadow: 0 0 5px rgba(255, 255, 255, 1);
 }
 
-.button:hover {
-  color: lightgray;
+/* save effect */
+#save-effect.animation {
+  animation: .5s save-animation ease;
+}
+
+@keyframes save-animation {
+  from {
+    background-color: rgba(255, 255, 255, 0.8);
+  }
+  to {
+    background-color: transparent;
+  }
 }

@@ -83,6 +83,8 @@ export const status = (state = initialStatus, action) => {
 					[action.propName]: initialStatus.temporalStatus[action.propName]
 				})
 			});
+		case 'LOAD':
+			return action.state.status;
 		default:
 			return state;
 	}

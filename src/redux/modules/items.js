@@ -39,7 +39,8 @@ export const useItem = itemName => {
 export const items = (state = initialItems, action) => {
   switch (action.type) {
     case 'OBTAIN_ITEM':
-      const frameIndex = Object.values(state)
+      //const frameIndex = Object.values(state) // Android default browser does not support Object#values
+      const frameIndex = Object.keys(state).map(key => state[key])
         .map(item => item.frameIndex)
         .sort((frameIndex1, frameIndex2) => frameIndex1 - frameIndex2)
         .reduce((prev, curr) => (prev === curr ? curr + 1 : prev), 0);
@@ -56,6 +57,8 @@ export const items = (state = initialItems, action) => {
           frameIndex: -1
         }
       });
+    case 'LOAD':
+      return action.state.items;
     default:
       return state;
   }

@@ -1,16 +1,18 @@
 import {combineReducers} from 'redux';
+import {screen} from './modules/screen';
+import {gameControl} from './modules/gameControl';
 import {items} from './modules/items';
 import {selectedItem} from './modules/selectedItem';
 import {status} from './modules/status';
 import {perspective} from './modules/perspective';
-import {gameControl} from './modules/gameControl';
 
 const rootReducer = combineReducers({
+	screen,
+	gameControl,
 	items,
 	selectedItem,
 	status,
-	perspective,
-	gameControl
+	perspective
 });
 
 export default rootReducer;

@@ -1,12 +1,16 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import ItemFrameContainer from '../containers/ItemFrameContainer';
+import ItemFrameContainer from './ItemFrameContainer';
 import {itemFrameSize, itemFrameMargin} from '../constants/constants';
 
 const buttonStyle = {
 	width: itemFrameSize + itemFrameMargin * 2,
 	paddingTop: 5,
-	paddingBottom: 5
+	paddingBottom: 5,
+	textAlign: 'center',
+  verticalAlign: 'middle',
+  color: 'white',
+  cursor: 'pointer'
 };
 
 const Sidebar = ({onSaveClick, onHintClick}) => (

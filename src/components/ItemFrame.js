@@ -1,6 +1,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import {itemFrameSize, itemFrameMargin} from '../constants/constants';
+import {itemImages} from '../utils/AssetsLoader';
 
 const ItemFrame = ({itemName, selected, onItemSelect}) => (
 	<div
@@ -23,7 +24,7 @@ const ItemFrame = ({itemName, selected, onItemSelect}) => (
 		}}
 	>
 		{itemName !== null && <img
-			src={require(`../assets/images/items/${itemName}.png`)}
+			src={itemImages[itemName].src}
 			width={itemFrameSize}
 			style={{
 				pointerEvents: 'none'
