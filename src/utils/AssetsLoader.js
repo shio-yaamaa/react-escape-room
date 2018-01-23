@@ -1,4 +1,6 @@
-const requireAll = (context, filetype) => { // filetype is either 'IMAGE' or 'SOUND'
+const requireAll = (context, filetype, callback) => { // filetype is either 'IMAGE' or 'SOUND'
+	totalAssetsCount += context.keys().length;
+
 	const fileList = {};
 	context.keys().forEach((filename) => {
 		const filenameForKey = filename.substring(
@@ -8,49 +10,84 @@ const requireAll = (context, filetype) => { // filetype is either 'IMAGE' or 'SO
 		switch (filetype) {
 			case 'IMAGE':
 				fileList[filenameForKey] = new Image();
+				fileList[filenameForKey].onload = () => {
+					loadedAssetsCount++;
+					callback.call();
+				};
 				fileList[filenameForKey].src = context(filename);
 				break;
 			case 'SOUND':
 				fileList[filenameForKey] = new Audio(context(filename));
+				fileList[filenameForKey].oncanplaythrough = () => {
+					loadedAssetsCount++;
+					callback.call();
+				}; // 間に合うのか？
 				break;
 			default:
 				throw Error("filetype must be either 'IMAGE' or 'SOUND'");
 		}
 	});
-	totalAssetsCount += fileList.length;
 	return fileList;
 };
 
 // require the file when calling this function!
-const requireIndividual = (path, filetype) => {
+const requireIndividual = (path, filetype, callback) => {
+	totalAssetsCount += 1;
+
 	let file = undefined;
 	switch (filetype) {
 		case 'IMAGE':
 			file = new Image();
+			file.onload = () => {
+				loadedAssetsCount++;
+				callback.call();
+			};
 			file.src = path;
 			return file;
 		case 'SOUND':
 			file = new Audio(path);
+			file.oncanplaythrough = () => {
+				loadedAssetsCount++;
+				callback.call();
+			}
 			return file;
 		default:
 			throw Error("filetype must be either 'IMAGE' or 'SOUND'");
 	}
 };
 
-let allAssetsRequired = false;
 let totalAssetsCount = 0;
 let loadedAssetsCount = 0;
 
-export const itemImages = requireAll(require.context('../assets/images/items', false, /\./), 'IMAGE');
-export const mainViewImages = requireAll(require.context('../assets/images/mainViews', false, /\./), 'IMAGE');
-export const mainViewMapImages = requireAll(require.context('../assets/images/mainViewMaps', false, /\./), 'IMAGE');
-export const mainViewOverlayImages = requireAll(require.context('../assets/images/mainViewOverlays', false, /\./), 'IMAGE');
-export const sounds = requireAll(require.context('../assets/sounds', false, /\./), 'SOUND');
+const itemImageContext = require.context('../assets/images/items', false, /\./);
+const mainViewImageContext = require.context('../assets/images/mainViews', false, /\./);
+const mainViewMapImageContext = require.context('../assets/images/mainViewMaps', false, /\./);
+const mainViewOverlayImageContext = require.context('../assets/images/mainViewOverlays', false, /\./);
+const soundContext = require.context('../assets/sounds', false, /\./);
+const arrowImageContext = require('../assets/images/arrow.svg');
 
-export const arrowImage = requireIndividual(require('../assets/images/arrow.svg'), 'IMAGE');
+export let itemImages = undefined;
+export let mainViewImages = undefined;
+export let mainViewMapImages = undefined;
+export let mainViewOverlayImages = undefined;
+export let sounds = undefined;
+export let arrowImage = undefined;
 
-allAssetsRequired = true;
+export const loadAssets = (callback) => {
+	const callbackIfReady = () => {
+		if (allAssetsRequired && totalAssetsCount === loadedAssetsCount) {
+			callback.call();
+		}
+	}
 
-export const loadAssets = () => {
+	let allAssetsRequired = false;
 
+	itemImages = requireAll(itemImageContext, 'IMAGE', callbackIfReady);
+	mainViewImages = requireAll(mainViewImageContext, 'IMAGE', callbackIfReady);
+	mainViewMapImages = requireAll(mainViewMapImageContext, 'IMAGE', callbackIfReady);
+	mainViewOverlayImages = requireAll(mainViewOverlayImageContext, 'IMAGE', callbackIfReady);
+	sounds = requireAll(soundContext, 'SOUND', callbackIfReady);
+	arrowImage = requireIndividual(arrowImageContext, 'IMAGE', callbackIfReady);
+
+	allAssetsRequired = true;
 }

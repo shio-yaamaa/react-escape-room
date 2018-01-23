@@ -4,53 +4,67 @@ import {connect} from 'react-redux';
 import {nextScreen} from '../redux/modules/screen';
 import {load} from '../redux/modules/gameControl';
 import Game from './Game';
-import {loadAssets} from '../utils/AssetsLoader';
+import StartScreen from './StartScreen';
+import {loadAssets, sounds} from '../utils/AssetsLoader';
 
-// Component
+const screenStyle = {
+	position: 'absolute',
+	top: 0,
+	left: 0,
+	width: '100%',
+	height: '100%'
+};
 
-const ScreenSwitch = ({screen, onGameStart, onAssetsLoadDone, onGameEnd}) => (
+const ScreenSwitch = ({screen, onGameStart}) => (
 	<div id="screen-switch" style={{
+		position: 'relative',
 		width: 590,
 		height: 380,
 		marginLeft: 'auto',
 		marginRight: 'auto'
 	}}>
 		{screen === 'start' &&
-			<div style={{
-				width: '100%',
-				height: '100%',
-				backgroundColor: 'lightgray'
-			}}>
-				<p onClick={() => onGameStart(true)}>New</p>
-				<p onClick={() => onGameStart(false)}>Load</p>
+			<div style={screenStyle}>
+				<StartScreen style={screenStyle} onGameStart={onGameStart} />
 			</div>
 		}
 		{screen === 'load' &&
 			<div style={{
-				width: '100%',
-				height: '100%',
-				backgroundColor: 'lightgray'
-			}}>loading...</div>
+				...screenStyle,
+				display: 'flex',
+				alignItems: 'center',
+				justifyContent: 'center',
+				border: '1px solid gray'
+			}}>
+				<p style={{
+					fontSize: '2rem',
+					color: 'white'
+				}}>Loading...</p>
+			</div>
 		}
-		{screen === 'game' && <Game />}
+		{screen === 'game' &&
+			<div style={screenStyle}>
+				<Game />
+			</div>
+		}
 		{screen === 'end' &&
 			<div style={{
-				width: '100%',
-				height: '100%',
+				...screenStyle,
 				backgroundColor: 'lightblue'
 			}}>Congratulations!</div>
 		}
+		<div style={{ // fade
+			...screenStyle,
+			backgroundColor: 'transparent',
+			pointerEvents: 'none'
+		}}></div>
 	</div>
 );
 
 ScreenSwitch.propTypes = {
 	screen: PropTypes.string.isRequired,
-	onGameStart: PropTypes.func.isRequired,
-	onAssetsLoadDone: PropTypes.func.isRequired,
-	onGameEnd: PropTypes.func.isRequired
+	onGameStart: PropTypes.func.isRequired
 };
-
-// Container
 
 const mapStateToProps = state => {
 	return {
@@ -65,14 +79,10 @@ const mapDispatchToProps = dispatch => {
 				dispatch(load(JSON.parse(localStorage.getItem('savedData'))));
 			}
 			dispatch(nextScreen());
-			// dispatchしてstateが変わったら、下のコードは実行されるのか？
-			loadAssets(() => dispatch(nextScreen()));
-		},
-		onAssetsLoadDone: () => {
-			dispatch(nextScreen());
-		},
-		onGameEnd: () => {
-			dispatch(nextScreen());
+			loadAssets(() => {
+				sounds['start'].play();
+				dispatch(nextScreen());
+			});
 		}
 	}
 };

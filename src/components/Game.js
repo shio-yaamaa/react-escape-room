@@ -8,8 +8,6 @@ import Hint from './Hint';
 import stateToHint from '../scenario/stateToHint';
 import {sounds} from '../utils/AssetsLoader';
 
-// Component
-
 class Game extends React.Component {
 	componentDidMount() {
 		this.saveEffect.addEventListener('animationend', () => {
@@ -72,8 +70,6 @@ Game.propTypes = {
 	onHintCancel: PropTypes.func.isRequired
 };
 
-// Container
-
 const mapStateToProps = state => {
 	return {
 		selectedItem: state.selectedItem,
@@ -85,6 +81,7 @@ const mapStateToProps = state => {
 const mapDispatchToProps = dispatch => {
 	return {
 		onHintClick: () => {
+			sounds['button'].play();
 			dispatch(showHint());
 		},
 		onHintCancel: () => {

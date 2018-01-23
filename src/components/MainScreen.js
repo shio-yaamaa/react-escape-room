@@ -11,8 +11,6 @@ import MainViewMap from './MainViewMap';
 import ArrowArea from './ArrowArea';
 import {dialCenterPositions} from '../constants/constants';
 
-// Component
-
 const MainScreen = ({state, mapIndex, mainViewImage, mainViewOverlays, mainViewMapImage, arrowDirections, onMainScreenClick}) => (
 	<div style={{
 		position: 'relative',
@@ -50,8 +48,6 @@ MainScreen.propTypes = {
 	arrowDirections: PropTypes.arrayOf(PropTypes.string).isRequired,
 	onMainScreenClick: PropTypes.func.isRequired
 };
-
-// Container
 
 const calculateOverlays = state => {
 	const mainViewOverlays = [];

@@ -1,5 +1,15 @@
+@font-face {
+   font-family: 'Noto Sans Japanese';
+   font-style: normal;
+   font-weight: 300;
+   src: url(//fonts.gstatic.com/ea/notosansjapanese/v6/NotoSansJP-DemiLight.woff2) format('woff2'),
+        url(//fonts.gstatic.com/ea/notosansjapanese/v6/NotoSansJP-DemiLight.woff) format('woff'),
+        url(//fonts.gstatic.com/ea/notosansjapanese/v6/NotoSansJP-DemiLight.otf) format('opentype');
+}
+
 * {
 	box-sizing: border-box;
+  font-family: 'Noto Sans Japanese', sans-serif;
 }
 
 body {
@@ -11,6 +21,10 @@ body {
 
 #screen-switch * {
   user-select: none;
+}
+
+.start-button.enabled:hover {
+  background-color: #F57C00 !important;
 }
 
 .up-arrow-animation {

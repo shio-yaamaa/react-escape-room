@@ -4,8 +4,6 @@ import {connect} from 'react-redux';
 import {selectItem} from '../redux/modules/selectedItem';
 import ItemFrame from './ItemFrame';
 
-// Component
-
 const ItemFrameContainer = ({itemFrames, onItemSelect}) => (
 	<div style={{
 		display: 'flex',
@@ -33,8 +31,6 @@ ItemFrameContainer.propTypes = {
   ).isRequired,
   onItemSelect: PropTypes.func.isRequired
 };
-
-// Container
 
 const mapStateToProps = state => {
 	const itemFrames = Array(2 * 7).fill({

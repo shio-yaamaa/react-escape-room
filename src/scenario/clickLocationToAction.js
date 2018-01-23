@@ -2,6 +2,7 @@ import {changePerspective} from '../redux/modules/perspective';
 import {changeStatus, incrementDialNumber, resetTemporalStatus} from '../redux/modules/status';
 import {obtainItem, useItem} from '../redux/modules/items';
 import {selectItem} from '../redux/modules/selectedItem';
+import {nextScreen} from '../redux/modules/screen';
 import isDialNumberCorrect from '../utils/isDialNumberCorrect';
 import {sounds} from '../utils/AssetsLoader';
 
@@ -682,8 +683,7 @@ const clickLocationToAction = (dispatch, perspective, mapIndex, location, status
 						dispatch(changeStatus(false, 'door', 'OPEN'));
 						playSound('door');
 					} else { // UNLOCKED & OPEN
-						// game clear!
-						console.log('game clear!!!');
+						dispatch(nextScreen());
 					}
 					return;
 				case 'NAVY': // opened part of door
