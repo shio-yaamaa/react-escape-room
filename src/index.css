@@ -27,18 +27,26 @@ body {
   background-color: #F57C00 !important;
 }
 
+/* load circles */
+@keyframes loading-animation {
+  from {
+    transform: rotate(0deg);
+  }
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+/* arrow */
 .up-arrow-animation {
   animation: up-arrow-animation infinite 0.4s;
 }
-
 .down-arrow-animation {
   animation: down-arrow-animation infinite 0.4s;
 }
-
 .left-arrow-animation {
   animation: left-arrow-animation infinite 0.4s;
 }
-
 .right-arrow-animation {
 	animation: right-arrow-animation infinite 0.4s;
 }
@@ -48,42 +56,32 @@ body {
    50% {margin-bottom: 8px;}
   100% {margin-bottom: 0;}
 }
-
 @keyframes down-arrow-animation {
     0% {margin-top: 0;}
    50% {margin-top: 8px;}
   100% {margin-top: 0;}
 }
-
 @keyframes left-arrow-animation {
     0% {margin-right: 0;}
    50% {margin-right: 8px;}
   100% {margin-right: 0;}
 }
-
 @keyframes right-arrow-animation {
     0% {margin-left: 0;}
    50% {margin-left: 8px;}
   100% {margin-left: 0;}
 }
 
-/* the style of ItemFrames must be handled by css because it requires pseudo class */
-.empty-item-frame {
-  background-color: #555555;
-  border: 2px solid transparent;
-}
-
+/* item frame */
 .unselected-item-frame {
-  background-color: white;
+  background-color: #333333;
   border: 2px solid transparent;
 }
-
 .unselected-item-frame:hover {
-  border: 2px solid gray;
+  border: 2px solid #666666;
 }
-
 .selected-item-frame {
-  background-color: lightgray;
+  background-color: #333333;
   border: 2px solid white;
 }
 
@@ -95,7 +93,6 @@ body {
 #save-effect.animation {
   animation: .5s save-animation ease;
 }
-
 @keyframes save-animation {
   from {
     background-color: rgba(255, 255, 255, 0.8);

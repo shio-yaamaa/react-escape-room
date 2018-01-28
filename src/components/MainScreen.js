@@ -11,7 +11,7 @@ import MainViewMap from './MainViewMap';
 import ArrowArea from './ArrowArea';
 import {dialCenterPositions} from '../constants/constants';
 
-const MainScreen = ({state, mapIndex, mainViewImage, mainViewOverlays, mainViewMapImage, arrowDirections, onMainScreenClick}) => (
+const MainScreen = ({state, mapIndex, mainViewImage, mainViewOverlays, mainViewMapImage, arrowDirections, onGameEnd, onMainScreenClick}) => (
 	<div style={{
 		position: 'relative',
 		width: 480,
@@ -21,13 +21,13 @@ const MainScreen = ({state, mapIndex, mainViewImage, mainViewOverlays, mainViewM
 		<MainViewOverlay mainViewOverlays={mainViewOverlays} />
 		<MainViewMap
 			mainViewMapImage={mainViewMapImage}
-			onMainViewClick={(color) => onMainScreenClick(state, mapIndex, color)}
+			onMainViewClick={(color) => onMainScreenClick(state, mapIndex, color, onGameEnd)}
 		/>
 		{arrowDirections.map(direction => (
 			<ArrowArea
 				key={direction}
 				direction={direction}
-				onArrowClick={(direction) => onMainScreenClick(state, mapIndex, direction)}
+				onArrowClick={(direction) => onMainScreenClick(state, mapIndex, direction, onGameEnd)}
 			/>
 		))}
 	</div>
@@ -46,6 +46,7 @@ MainScreen.propTypes = {
 	).isRequired,
 	mainViewMapImage: PropTypes.string.isRequired,
 	arrowDirections: PropTypes.arrayOf(PropTypes.string).isRequired,
+	onGameEnd: PropTypes.func.isRequired,
 	onMainScreenClick: PropTypes.func.isRequired
 };
 
@@ -64,7 +65,7 @@ const calculateOverlays = state => {
 	return mainViewOverlays;
 };
 
-const mapStateToProps = state => {
+const mapStateToProps = (state, ownProps) => {
 	const mapIndex = stateToMapImageIndex(state.perspective, state.status, state.items);
 
 	return {
@@ -78,13 +79,15 @@ const mapStateToProps = state => {
 		].join('_'),
 		mainViewOverlays: calculateOverlays(state),
 		mainViewMapImage: [state.perspective, mapIndex].join('_'),
-		arrowDirections: arrowDirections[state.perspective]
+		arrowDirections: arrowDirections[state.perspective],
+
+		onGameEnd: ownProps.onGameEnd
 	};
 };
 
 const mapDispatchToProps = dispatch => {
 	return {
-		onMainScreenClick: (state, mapIndex, location) => {
+		onMainScreenClick: (state, mapIndex, location, onGameEnd) => {
 			clickLocationToAction(
 				dispatch,
 				state.perspective,
@@ -92,7 +95,8 @@ const mapDispatchToProps = dispatch => {
 				location,
 				state.status,
 				state.items,
-				state.selectedItem
+				state.selectedItem,
+				onGameEnd
 			);
 		}
 	}

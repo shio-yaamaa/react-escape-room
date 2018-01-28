@@ -3,14 +3,17 @@ import PropTypes from 'prop-types';
 import {connect} from 'react-redux';
 import {selectItem} from '../redux/modules/selectedItem';
 import ItemFrame from './ItemFrame';
+import {itemFrameMargin} from '../constants/constants';
 
 const ItemFrameContainer = ({itemFrames, onItemSelect}) => (
 	<div style={{
 		display: 'flex',
 		flexWrap: 'wrap',
-		justifyContent: 'center',
+    justifyContent: 'center',
+    alignContent: 'flex-start',
 		width: '100%',
-		height: '90%'
+		height: '90%',
+    marginTop: itemFrameMargin * -1
 	}}>
 		{itemFrames.map((itemFrame, index) => (
 			<ItemFrame
@@ -33,7 +36,7 @@ ItemFrameContainer.propTypes = {
 };
 
 const mapStateToProps = state => {
-	const itemFrames = Array(2 * 7).fill({
+	const itemFrames = Array(2 * 5).fill({
 		itemName: null,
 		selected: false
 	});

@@ -1,10 +1,24 @@
+// loading screen
+export const loadingAnimationRadius = 35;
+export const loadingCircleSize = loadingAnimationRadius / 10 * 2;
+
+// game screen
+export const marginBetweenMainScreenAndSidebar = 6;
+
+// main screen
+export const mainScreenWidth = 480;
+export const mainScreenHeight = 380;
+
 export const mainViewBorderRadius = 8;
 
+// arrow
 export const arrowAreaWidth = 40;
 export const arrowSize = 35;
 
-export const itemFrameSize = 40;
-export const itemFrameMargin = 2;
+// sidebar
+export const itemFrameSize = 55;
+export const itemFrameMargin = 3;
+export const sidebarWidth = itemFrameSize * 2 + itemFrameMargin * 2 * 2;
 
 // dial position
 const dialWidth = 69;

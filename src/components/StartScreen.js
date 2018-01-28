@@ -18,8 +18,7 @@ const StartScreen = ({onGameStart}) => (
 		alignItems: 'center',
 		justifyContent: 'center',
 		width: '100%',
-		height: '100%',
-		border: '1px solid gray'
+		height: '100%'
 	}}>
 		<p style={{
 			paddingBottom: '2rem',

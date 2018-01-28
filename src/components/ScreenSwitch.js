@@ -5,65 +5,100 @@ import {nextScreen} from '../redux/modules/screen';
 import {load} from '../redux/modules/gameControl';
 import Game from './Game';
 import StartScreen from './StartScreen';
+import LoadScreen from './LoadScreen';
+import EndScreen from './EndScreen';
 import {loadAssets, sounds} from '../utils/AssetsLoader';
+import {marginBetweenMainScreenAndSidebar, mainScreenWidth, mainScreenHeight, sidebarWidth} from '../constants/constants';
+import {backgroundBlack} from '../constants/colors';
 
-const screenStyle = {
-	position: 'absolute',
-	top: 0,
-	left: 0,
-	width: '100%',
-	height: '100%'
-};
+class ScreenSwitch extends React.Component {
+	constructor(props) {
+		super(props);
+		this.screenStyle = {
+			position: 'absolute',
+			top: 0,
+			left: 0,
+			width: '100%',
+			height: '100%'
+		};
+	}
 
-const ScreenSwitch = ({screen, onGameStart}) => (
-	<div id="screen-switch" style={{
-		position: 'relative',
-		width: 590,
-		height: 380,
-		marginLeft: 'auto',
-		marginRight: 'auto'
-	}}>
-		{screen === 'start' &&
-			<div style={screenStyle}>
-				<StartScreen style={screenStyle} onGameStart={onGameStart} />
-			</div>
+	startFading(color, duration, callback) {
+		this.fade.style.backgroundColor = color;
+		const framePerMillisecond = 24 / 1000; // 24fps
+		let currentFrame = 0;
+		const middleFrame = framePerMillisecond * duration / 2;
+		const interval = setInterval(() => {
+			currentFrame++;
+			this.fade.style.opacity = 1 - Math.abs((currentFrame / middleFrame - 1) ** 3) // cubic easing
+			if (currentFrame === Math.round(middleFrame)) {
+				callback.call();
+			}
+			if (currentFrame > framePerMillisecond * duration) { // animation end
+				clearInterval(interval);
+			}
+		}, 1 / framePerMillisecond);
+	}
+
+	handleGameStart(isNew) {
+		this.props.nextScreen();
+		if (!isNew) {
+			this.props.loadSavedData();
 		}
-		{screen === 'load' &&
-			<div style={{
-				...screenStyle,
-				display: 'flex',
-				alignItems: 'center',
-				justifyContent: 'center',
-				border: '1px solid gray'
+		loadAssets(() => {
+			this.startFading(backgroundBlack, 1000, () => {
+				sounds['start'].play();
+				this.props.nextScreen();
+			});
+		});
+	}
+
+	handleGameEnd() {
+		this.startFading('white', 1800, () => {
+			this.props.nextScreen();
+			sounds['end'].play();
+		});
+	}
+
+	render() {
+		return (
+			<div id="screen-switch" style={{
+				position: 'relative',
+				width: marginBetweenMainScreenAndSidebar + mainScreenWidth + sidebarWidth,
+				height: mainScreenHeight,
+				marginLeft: 'auto',
+				marginRight: 'auto'
 			}}>
-				<p style={{
-					fontSize: '2rem',
-					color: 'white'
-				}}>Loading...</p>
+				{this.props.screen === 'start' &&
+					<div style={this.screenStyle}>
+						<StartScreen onGameStart={isNew => this.handleGameStart.call(this, isNew)} />
+					</div>
+				}
+				{this.props.screen === 'load' &&
+					<div style={this.screenStyle}><LoadScreen /></div>
+				}
+				{this.props.screen === 'game' &&
+					<div style={this.screenStyle}>
+						<Game onGameEnd={this.handleGameEnd.bind(this)} />
+					</div>
+				}
+				{this.props.screen === 'end' &&
+					<div style={this.screenStyle}><EndScreen /></div>
+				}
+				<div ref={fade => this.fade = fade} style={{
+					...this.screenStyle,
+					opacity: 0,
+					pointerEvents: 'none'
+				}}></div>
 			</div>
-		}
-		{screen === 'game' &&
-			<div style={screenStyle}>
-				<Game />
-			</div>
-		}
-		{screen === 'end' &&
-			<div style={{
-				...screenStyle,
-				backgroundColor: 'lightblue'
-			}}>Congratulations!</div>
-		}
-		<div style={{ // fade
-			...screenStyle,
-			backgroundColor: 'transparent',
-			pointerEvents: 'none'
-		}}></div>
-	</div>
-);
+		);
+	}
+}
 
 ScreenSwitch.propTypes = {
 	screen: PropTypes.string.isRequired,
-	onGameStart: PropTypes.func.isRequired
+	loadSavedData: PropTypes.func.isRequired,
+	nextScreen: PropTypes.func.isRequired
 };
 
 const mapStateToProps = state => {
@@ -74,17 +109,13 @@ const mapStateToProps = state => {
 
 const mapDispatchToProps = dispatch => {
 	return {
-		onGameStart: isNew => {
-			if (!isNew) {
-				dispatch(load(JSON.parse(localStorage.getItem('savedData'))));
-			}
+		loadSavedData: () => {
+			dispatch(load(JSON.parse(localStorage.getItem('savedData'))));
+		},
+		nextScreen: () => {
 			dispatch(nextScreen());
-			loadAssets(() => {
-				sounds['start'].play();
-				dispatch(nextScreen());
-			});
 		}
-	}
+	};
 };
 
 export default connect(

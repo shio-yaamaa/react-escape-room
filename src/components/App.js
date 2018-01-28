@@ -1,5 +1,6 @@
 import React from 'react';
 import ScreenSwitch from './ScreenSwitch';
+import {backgroundBlack} from '../constants/colors';
 
 const App = () => (
 	<div style={{
@@ -9,7 +10,7 @@ const App = () => (
 	  <div style={{
 	  	paddingTop: 50,
 	  	paddingBottom: 50,
-	    backgroundColor: '#111111'
+	    backgroundColor: backgroundBlack
 	  }}>
 	    <ScreenSwitch />
 	  </div>

@@ -1,10 +1,10 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import ItemFrameContainer from './ItemFrameContainer';
-import {itemFrameSize, itemFrameMargin} from '../constants/constants';
+import {marginBetweenMainScreenAndSidebar, itemFrameSize, itemFrameMargin, sidebarWidth} from '../constants/constants';
 
 const buttonStyle = {
-	width: itemFrameSize + itemFrameMargin * 2,
+	width: itemFrameSize + itemFrameMargin,
 	paddingTop: 5,
 	paddingBottom: 5,
 	textAlign: 'center',
@@ -18,8 +18,9 @@ const Sidebar = ({onSaveClick, onHintClick}) => (
 		display: 'flex',
 		flexDirection: 'column',
 		justifyContent: 'space-between',
-		width: 110,
-		height: '100%'
+		width: sidebarWidth,
+		height: '100%',
+    marginLeft: marginBetweenMainScreenAndSidebar
 	}}>
 		<ItemFrameContainer />
 		<div style={{

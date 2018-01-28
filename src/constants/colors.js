@@ -1,0 +1,1 @@
+export const backgroundBlack = '#111111';

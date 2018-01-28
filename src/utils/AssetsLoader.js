@@ -65,6 +65,7 @@ const mainViewMapImageContext = require.context('../assets/images/mainViewMaps',
 const mainViewOverlayImageContext = require.context('../assets/images/mainViewOverlays', false, /\./);
 const soundContext = require.context('../assets/sounds', false, /\./);
 const arrowImageContext = require('../assets/images/arrow.svg');
+const endScreenBackgroundContext = require('../assets/images/endScreenBackground.png');
 
 export let itemImages = undefined;
 export let mainViewImages = undefined;
@@ -72,6 +73,7 @@ export let mainViewMapImages = undefined;
 export let mainViewOverlayImages = undefined;
 export let sounds = undefined;
 export let arrowImage = undefined;
+export let endScreenBackground = undefined;
 
 export const loadAssets = (callback) => {
 	const callbackIfReady = () => {
@@ -88,6 +90,7 @@ export const loadAssets = (callback) => {
 	mainViewOverlayImages = requireAll(mainViewOverlayImageContext, 'IMAGE', callbackIfReady);
 	sounds = requireAll(soundContext, 'SOUND', callbackIfReady);
 	arrowImage = requireIndividual(arrowImageContext, 'IMAGE', callbackIfReady);
+	endScreenBackground = requireIndividual(endScreenBackgroundContext, 'IMAGE', callbackIfReady);
 
 	allAssetsRequired = true;
 }

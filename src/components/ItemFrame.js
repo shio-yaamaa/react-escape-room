@@ -5,13 +5,8 @@ import {itemImages} from '../utils/AssetsLoader';
 
 const ItemFrame = ({itemName, selected, onItemSelect}) => (
 	<div
-		className={
-			itemName === null
-				? 'empty-item-frame'
-				: (selected ? 'selected-item-frame' : 'unselected-item-frame')
-		}
+		className={selected ? 'selected-item-frame' : 'unselected-item-frame'}
 		style={{
-			boxSizing: 'content-box',
 			width: itemFrameSize,
 			height: itemFrameSize,
 			margin: itemFrameMargin,
