@@ -72,17 +72,11 @@ body {
   100% {margin-left: 0;}
 }
 
-/* item frame */
-.unselected-item-frame {
-  background-color: #333333;
-  border: 2px solid transparent;
+.magnifying-glass {
+  opacity: 0.6;
 }
-.unselected-item-frame:hover {
-  border: 2px solid #666666;
-}
-.selected-item-frame {
-  background-color: #333333;
-  border: 2px solid white;
+.magnifying-glass:hover {
+  opacity: 1;
 }
 
 .button:hover {

@@ -1,18 +1,40 @@
+// Initial state
+
+const initialSelectedItem = {
+  itemInHand: null,
+  itemInDetailWindow: null
+};
+
 // Action creator
 
-export const selectItem = itemName => {
+export const changeItemInHand = itemName => {
   return {
-    type: 'SELECT_ITEM',
+    type: 'CHANGE_ITEM_IN_HAND',
+    itemName: itemName
+  };
+};
+
+export const changeItemInDetailWindow = itemName => {
+  return {
+    type: 'CHANGE_ITEM_IN_DETAIL_WINDOW',
     itemName: itemName
   };
 };
 
 // Reducer
 
-export const selectedItem = (state = null, action) => {
+export const selectedItem = (state = initialSelectedItem, action) => {
 	switch (action.type) {
-		case 'SELECT_ITEM':
-			return state === action.itemName ? null : action.itemName;
+    case 'CHANGE_ITEM_IN_HAND':
+      return {
+        itemInHand: action.itemName,
+        itemInDetailWindow: state.itemInDetailWindow
+      };
+    case 'CHANGE_ITEM_IN_DETAIL_WINDOW':
+      return {
+        itemInHand: state.itemInHand,
+        itemInDetailWindow: action.itemName
+      };
 		case 'LOAD':
 			return action.state.selectedItem;
 		default:

@@ -4,6 +4,7 @@ export const loadingCircleSize = loadingAnimationRadius / 10 * 2;
 
 // game screen
 export const marginBetweenMainScreenAndSidebar = 6;
+export const itemInHandImageSize = 48;
 
 // main screen
 export const mainScreenWidth = 480;
@@ -15,10 +16,16 @@ export const mainViewBorderRadius = 8;
 export const arrowAreaWidth = 40;
 export const arrowSize = 35;
 
+// detail windows
+export const itemDetailWindowMargin = 70;
+
 // sidebar
 export const itemFrameSize = 55;
 export const itemFrameMargin = 3;
+export const itemFrameBorderWidth = 3;
 export const sidebarWidth = itemFrameSize * 2 + itemFrameMargin * 2 * 2;
+
+export const magnifyingGlassSize = itemFrameSize * 0.3;
 
 // dial position
 const dialWidth = 69;

@@ -4,14 +4,18 @@ import {connect} from 'react-redux';
 import arrowDirections from '../scenario/arrowDirections';
 import stateToImageIndex from '../scenario/stateToImageIndex';
 import stateToMapImageIndex from '../scenario/stateToMapImageIndex';
+import stateToItemDetailImageIndex from '../scenario/stateToItemDetailImageIndex';
 import clickLocationToAction from '../scenario/clickLocationToAction';
 import MainView from './MainView';
 import MainViewOverlay from './MainViewOverlay';
 import MainViewMap from './MainViewMap';
 import ArrowArea from './ArrowArea';
+import ItemDetailWindow from './ItemDetailWindow';
+import {changeItemInDetailWindow} from '../redux/modules/selectedItem';
 import {dialCenterPositions} from '../constants/constants';
 
-const MainScreen = ({state, mapIndex, mainViewImage, mainViewOverlays, mainViewMapImage, arrowDirections, onGameEnd, onMainScreenClick}) => (
+const MainScreen = ({state, mapIndex, mainViewImage, mainViewOverlays, mainViewMapImage,
+  arrowDirections, itemDetailImage, onGameEnd, onMainScreenClick, onItemDetailWindowCancel}) => (
 	<div style={{
 		position: 'relative',
 		width: 480,
@@ -30,6 +34,12 @@ const MainScreen = ({state, mapIndex, mainViewImage, mainViewOverlays, mainViewM
 				onArrowClick={(direction) => onMainScreenClick(state, mapIndex, direction, onGameEnd)}
 			/>
 		))}
+    {itemDetailImage !== null &&
+      <ItemDetailWindow
+        itemDetailImage={itemDetailImage}
+        onItemDetailWindowCancel={onItemDetailWindowCancel}
+      />
+    }
 	</div>
 );
 
@@ -46,8 +56,10 @@ MainScreen.propTypes = {
 	).isRequired,
 	mainViewMapImage: PropTypes.string.isRequired,
 	arrowDirections: PropTypes.arrayOf(PropTypes.string).isRequired,
+  itemDetailImage: PropTypes.string, // nullable
 	onGameEnd: PropTypes.func.isRequired,
-	onMainScreenClick: PropTypes.func.isRequired
+	onMainScreenClick: PropTypes.func.isRequired,
+  onItemDetailWindowCancel: PropTypes.func.isRequired
 };
 
 const calculateOverlays = state => {
@@ -80,6 +92,10 @@ const mapStateToProps = (state, ownProps) => {
 		mainViewOverlays: calculateOverlays(state),
 		mainViewMapImage: [state.perspective, mapIndex].join('_'),
 		arrowDirections: arrowDirections[state.perspective],
+    itemDetailImage: state.selectedItem.itemInDetailWindow === null ? null : [
+      state.selectedItem.itemInDetailWindow,
+      stateToItemDetailImageIndex(state.selectedItem.itemInDetailWindow, state.itemDetailStatus)
+    ].join('_'),
 
 		onGameEnd: ownProps.onGameEnd
 	};
@@ -98,7 +114,8 @@ const mapDispatchToProps = dispatch => {
 				state.selectedItem,
 				onGameEnd
 			);
-		}
+		},
+    onItemDetailWindowCancel: () => dispatch(changeItemInDetailWindow(null)),
 	}
 };
 

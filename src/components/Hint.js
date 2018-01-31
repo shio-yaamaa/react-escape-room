@@ -22,7 +22,7 @@ const Hint = ({hint, onHintCancel}) => (
 			backgroundColor: 'rgba(255, 255, 255, 0.8)',
 			boxShadow: '0px 0px 20px 0px rgba(0, 0, 0, 0.3)',
 			overflow: 'auto'
-		}} onClick={(event) => {event.stopPropagation()}}>
+		}} onClick={event => event.stopPropagation()}>
 			{hint}
 		</div>
 	</div>

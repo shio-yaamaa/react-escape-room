@@ -24,9 +24,12 @@ to start the development server
 						<MainViewOverlay> // dial etc.
 						<MainViewMap> // opacity: 0
 						<ArrowArea> x4 // fire events when they (not their children!) are clicked
+            <ItemDetailWindow>
+              <ItemDetailView>
+              <ItemDetailViewMap>
 					<Sidebar>
 						<ItemFrameContainer container>
-							<ItemFrame> x12?
+							<ItemFrame> x10
 						<div>
 							<SaveButton>
 							<HintButton>
@@ -115,13 +118,36 @@ npmはちょっとでもアップデートしたらnextick-argsみたいなや�
 
 # Todo
 
-- change the item background color to dark gray
+```javascript
+itemDetailStatus = {
+  retainedStatus: {
+    stickIsBroken: true
+  },
+  temporalStatus: {
+    notebookPage: 3
+  }
+}
+```
 
-- items' detail window, which only covers the MainScreen
+- if the itemImage is completely changed, how should I deal with it?
+
+  同じアイテムと見なすとする
+  1. 二枚のアイテム画像が必要。インデックス管理するのか？
+    全部tissue_00みたいになる
+    item reducerに変更はない
+    itemDetailStatusじゃなくて、itemStatusになる？
+    stateToItemImageIndex(itemStatus)も必要
+  2. retainedStatus: {tissueIsCramped: true/false}
+
+- set the size of <img> elements
+
+- display the maps for item detail images
+
+- itemFrameを指定するobtainItemが必要。optional argumentはitemFrame=nullってしておけばいい
 
 - switch languages
 
-- If expanding is disabled on smartphones, can sequencial taps recognized?
+- If expanding is disabled on smartphones, can sequencial taps be recognized?
 
 - The file with error is automatically opened even if the error occurred on smartphones!
 
@@ -138,10 +164,6 @@ npmはちょっとでもアップデートしたらnextick-argsみたいなや�
   - Chrome doesn't play long SEs like start and end. It can be debugged using the Chrome debugging tool.
 
 # The reasons for specifications
-
-## Background color of map images
-
-Though using white as the background color reduces the number of colors available for clickable points, it's the best option since you can't create a completely transparent png file.
 
 ## The graphics software for creating map files
 

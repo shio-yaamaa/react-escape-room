@@ -34,6 +34,25 @@ export const useItem = itemName => {
   };
 };
 
+// useItemしなくてOK
+export const convertItem = (sourceItemName, targetItemName) => {
+  return {
+    type: 'CONVERT_ITEM',
+    sourceItemName: sourceItemName,
+    targetItemName: targetItemName
+  };
+};
+
+// useItemしなくてOK
+export const combineItems = (itemNameInHand, itemNameInDetailWindow, targetItemName) => {
+  return {
+    type: 'COMBINE_ITEMS',
+    itemNameInHand: itemNameInHand,
+    itemNameInDetailWindow: itemNameInDetailWindow,
+    targetItemName: targetItemName
+  };
+};
+
 // Reducers
 
 export const items = (state = initialItems, action) => {
@@ -55,6 +74,32 @@ export const items = (state = initialItems, action) => {
         [action.itemName]: {
           obtainStatus: 'USED',
           frameIndex: -1
+        }
+      });
+    case 'CONVERT_ITEM':
+      return Object.assign({}, state, {
+        [action.sourceItemName]: {
+          obtainStatus: 'USED',
+          frameIndex: -1
+        },
+        [action.targetItemName]: {
+          obtainStatus: 'OBTAINED',
+          frameIndex: state[action.sourceItemName].frameIndex
+        }
+      });
+    case 'COMBINE_ITEMS':
+      return Object.assign({}, state, {
+        [action.itemNameInHand]: {
+          obtainStatus: 'USED',
+          frameIndex: -1
+        },
+        [action.itemNameInDetailWindow]: {
+          obtainStatus: 'USED',
+          frameIndex: -1
+        },
+        [action.targetItemName]: {
+          obtainStatus: 'OBTAINED',
+          frameIndex: state[action.itemNameInDetailWindow].frameIndex
         }
       });
     case 'LOAD':

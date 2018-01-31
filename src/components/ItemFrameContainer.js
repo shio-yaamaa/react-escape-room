@@ -1,11 +1,11 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import {connect} from 'react-redux';
-import {selectItem} from '../redux/modules/selectedItem';
+import {changeItemInHand, changeItemInDetailWindow} from '../redux/modules/selectedItem';
 import ItemFrame from './ItemFrame';
 import {itemFrameMargin} from '../constants/constants';
 
-const ItemFrameContainer = ({itemFrames, onItemSelect}) => (
+const ItemFrameContainer = ({itemFrames, onChangeItemInHand, onChangeItemInDetailWindow}) => (
 	<div style={{
 		display: 'flex',
 		flexWrap: 'wrap',
@@ -19,7 +19,8 @@ const ItemFrameContainer = ({itemFrames, onItemSelect}) => (
 			<ItemFrame
 				key={index}
 				{...itemFrame}
-				onItemSelect={onItemSelect}
+				onChangeItemInHand={onChangeItemInHand}
+        onChangeItemInDetailWindow={onChangeItemInDetailWindow}
 			/>
 		))}
 	</div>
@@ -32,13 +33,13 @@ ItemFrameContainer.propTypes = {
       selected: PropTypes.bool
     })
   ).isRequired,
-  onItemSelect: PropTypes.func.isRequired
+  onChangeItemInHand: PropTypes.func.isRequired
 };
 
 const mapStateToProps = state => {
 	const itemFrames = Array(2 * 5).fill({
 		itemName: null,
-		selected: false
+		inHand: false
 	});
 
 	Object.keys(state.items).forEach(itemName => {
@@ -46,7 +47,7 @@ const mapStateToProps = state => {
 		if (item.obtainStatus === 'OBTAINED') {
 			itemFrames[item.frameIndex] = {
 				itemName: itemName,
-				selected: state.selectedItem === itemName
+				inHand: state.selectedItem.itemInHand === itemName
 			};
 		}
 	});
@@ -56,9 +57,8 @@ const mapStateToProps = state => {
 
 const mapDispatchToProps = dispatch => {
 	return {
-		onItemSelect: (itemName) => {
-			dispatch(selectItem(itemName));
-		}
+		onChangeItemInHand: itemName => dispatch(changeItemInHand(itemName)),
+    onChangeItemInDetailWindow: itemName => dispatch(changeItemInDetailWindow(itemName))
 	};
 };
 

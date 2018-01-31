@@ -8,23 +8,24 @@ import Hint from './Hint';
 import stateToHint from '../scenario/stateToHint';
 import {itemImages, sounds} from '../utils/AssetsLoader';
 import {isMobileDevice} from '../utils/UserAgent';
+import {itemInHandImageSize} from '../constants/constants';
 
 class Game extends React.Component {
 	componentDidMount() {
 		// set the event listener for selectedItemImage if UA is not mobile
 		if (!isMobileDevice()) {
-			this.gameDiv.addEventListener('mouseenter', () => this.setSelectedItemImageVisibility(true));
-			this.gameDiv.addEventListener('mouseleave', () => this.setSelectedItemImageVisibility(false));
-			this.gameDiv.addEventListener('mousemove', event => this.moveSelectedItemImage(event));
+			this.gameDiv.addEventListener('mouseenter', () => this.setItemInHandImageVisibility(true));
+			this.gameDiv.addEventListener('mouseleave', () => this.setItemInHandImageVisibility(false));
+			this.gameDiv.addEventListener('mousemove', event => this.moveItemInHandImage(event));
 
 			// set the initial position, visibility, and src of selectedItemImage (when loading the saved data)
-      const moveSelectedItemImageOnLoad = event => {
-        this.moveSelectedItemImage(event);
-        this.gameDiv.removeEventListener('mouseenter', moveSelectedItemImageOnLoad);
+      const moveItemInHandImageOnLoad = event => {
+        this.moveItemInHandImage(event);
+        this.gameDiv.removeEventListener('mouseenter', moveItemInHandImageOnLoad);
       };
-      this.gameDiv.addEventListener('mouseenter', moveSelectedItemImageOnLoad);
-			this.selectedItemImage.src = this.props.selectedItem === null ? '' : itemImages[this.props.selectedItem].src;
-			this.selectedItemImage.style.display = this.props.selectedItem === null ? 'none' : 'block';
+      this.gameDiv.addEventListener('mouseenter', moveItemInHandImageOnLoad);
+			this.itemInHandImage.src = this.props.itemInHand === null ? '' : itemImages[this.props.itemInHand].src;
+			this.itemInHandImage.style.display = this.props.itemInHand === null ? 'none' : 'block';
 		}
 
 		this.saveEffect.addEventListener('animationend', () => {
@@ -37,29 +38,29 @@ class Game extends React.Component {
 		if (isMobileDevice()) {
 			return;
 		}
-		if (this.props.selectedItem !== nextProps.selectedItem) {
-			if (nextProps.selectedItem === null) {
-				this.selectedItemImage.style.display = 'none';
+		if (this.props.itemInHand !== nextProps.itemInHand) {
+			if (nextProps.itemInHand === null) {
+				this.itemInHandImage.style.display = 'none';
 			} else {
-				this.selectedItemImage.src = itemImages[nextProps.selectedItem].src;
-				this.selectedItemImage.style.display = 'block';
+				this.itemInHandImage.src = itemImages[nextProps.itemInHand].src;
+				this.itemInHandImage.style.display = 'block';
 			}
 		}
 	}
 
-	setSelectedItemImageVisibility(isVisible) {
+	setItemInHandImageVisibility(isVisible) {
 		if (isVisible) {
-			if (this.props.selectedItem !== null) {
-				this.selectedItemImage.style.display = 'block';
+			if (this.props.itemInHand !== null) {
+				this.itemInHandImage.style.display = 'block';
 			}
 		} else {
-			this.selectedItemImage.style.display = 'none';
+			this.itemInHandImage.style.display = 'none';
 		}
 	}
 
-	moveSelectedItemImage(event) {
-		this.selectedItemImage.style.top = event.clientY + 'px';
-		this.selectedItemImage.style.left = event.clientX + 'px';
+	moveItemInHandImage(event) {
+		this.itemInHandImage.style.top = event.clientY + 'px';
+		this.itemInHandImage.style.left = event.clientX + 'px';
 	}
 
 	handleSave() {
@@ -104,18 +105,23 @@ class Game extends React.Component {
 					}}
 					ref={saveEffect => this.saveEffect = saveEffect}
 				></div>
-				<img ref={selectedItemImage => this.selectedItemImage = selectedItemImage} style={{
-					display: 'none',
-					position: 'fixed',
-					pointerEvents: 'none'
-				}} alt="" />
+				<img
+          ref={itemInHandImage => this.itemInHandImage = itemInHandImage}
+          width={itemInHandImageSize}
+          style={{
+					  display: 'none',
+					  position: 'fixed',
+					  pointerEvents: 'none'
+				  }}
+          alt=""
+        />
 			</div>
 		);
 	}
 }
 
 Game.propTypes = {
-	selectedItem: PropTypes.string, // nullable
+	itemInHand: PropTypes.string, // nullable
 	stateToSave: PropTypes.object.isRequired,
 	hint: PropTypes.string, // nullable
 	onGameEnd: PropTypes.func.isRequired,
@@ -125,7 +131,7 @@ Game.propTypes = {
 
 const mapStateToProps = (state, ownProps) => {
 	return {
-		selectedItem: state.selectedItem,
+		itemInHand: state.selectedItem.itemInHand,
 		stateToSave: state,
 		hint: state.gameControl.isHintVisible ? stateToHint(state.status, state.items) : null,
 		onGameEnd: ownProps.onGameEnd

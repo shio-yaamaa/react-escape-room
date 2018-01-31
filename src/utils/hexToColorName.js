@@ -24,10 +24,14 @@ const colors = {
 	'FF8080': 'SALMON',
 	'FF80FF': 'PINK',
 	'FFFF00': 'YELLOW',
-	'FFFF80': 'LEMON'
+	'FFFF80': 'LEMON',
+  'FFFFFF': 'WHITE'
 };
 
 const hexToColorName = (hex) => {
+  if (hex === null) {
+    return null;
+  }
 	hex = hex.toUpperCase();
 	return colors[hex] === undefined ? hex : colors[hex];
 };
