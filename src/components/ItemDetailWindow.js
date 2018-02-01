@@ -2,9 +2,9 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import ItemDetailView from './ItemDetailView';
 import ItemDetailViewMap from './ItemDetailViewMap';
-import {mainScreenWidth, mainScreenHeight, itemDetailWindowMargin} from '../constants/constants';
+import {itemDetailWindowWidth, itemDetailWindowHeight} from '../constants/constants';
 
-const ItemDetailWindow = ({itemDetailImage, onItemDetailWindowCancel}) => (
+const ItemDetailWindow = ({itemDetailImage, itemDetailMapImage, onItemDetailViewClick, onItemDetailWindowCancel}) => (
   <div style={{
     display: 'flex',
     justifyContent: 'center',
@@ -18,20 +18,25 @@ const ItemDetailWindow = ({itemDetailImage, onItemDetailWindowCancel}) => (
   }} onClick={onItemDetailWindowCancel}>
     <div style={{
       position: 'relative',
-      width: mainScreenWidth - itemDetailWindowMargin,
-      height: mainScreenHeight - itemDetailWindowMargin,
+      width: itemDetailWindowWidth,
+      height: itemDetailWindowHeight,
       borderRadius: 13,
       border: '3px solid #999999',
       backgroundColor: '#333333'
     }} onClick={event => event.stopPropagation()}>
       <ItemDetailView itemDetailImage={itemDetailImage} />
-      <ItemDetailViewMap />
+      <ItemDetailViewMap
+        itemDetailMapImage={itemDetailMapImage}
+        onItemDetailViewClick={onItemDetailViewClick}
+      />
     </div>
   </div>
 );
 
 ItemDetailView.propType = {
   itemDetailImage: PropTypes.string.isRequired,
+  itemDetailMapImage: PropTypes.string.isRequired,
+  onItemDetailViewClick: PropTypes.func.isRequired,
   onItemDetailWindowCancel: PropTypes.func.isRequired
 };
 

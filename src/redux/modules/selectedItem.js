@@ -35,6 +35,21 @@ export const selectedItem = (state = initialSelectedItem, action) => {
         itemInHand: state.itemInHand,
         itemInDetailWindow: action.itemName
       };
+    case 'USE_ITEM':
+      return {
+        itemInHand: action.itemName === state.itemInHand ? null : action.itemName,
+        itemInDetailWindow: state.itemInDetailWindow
+      };
+    case 'CONVERT_ITEM':
+      return {
+        itemInHand: state.itemInHand === action.sourceItemName ? action.targetItemName : state.itemInHand,
+        itemInDetailWindow: action.targetItemName
+      };
+    case 'COMBINE_ITEMS':
+      return {
+        itemInHand: null,
+        itemInDetailWindow: action.targetItemName
+      };
 		case 'LOAD':
 			return action.state.selectedItem;
 		default:

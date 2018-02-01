@@ -1,4 +1,4 @@
-const stateToItemDetailImageIndex = (itemName, itemStatus) => {
+const stateToItemImageIndex = (itemName, itemStatus) => {
   switch (itemName) {
     case 'tissue':
       return itemStatus.retainedStatus.isTissueBall ? '01' : '00';
@@ -7,4 +7,4 @@ const stateToItemDetailImageIndex = (itemName, itemStatus) => {
   }
 };
 
-export default stateToItemDetailImageIndex;
+export default stateToItemImageIndex;

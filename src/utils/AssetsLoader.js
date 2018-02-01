@@ -61,6 +61,7 @@ let loadedAssetsCount = 0;
 
 const itemImageContext = require.context('../assets/images/items', false, /\./);
 const itemDetailImageContext = require.context('../assets/images/itemDetails', false, /\./);
+const itemDetailMapImageContext = require.context('../assets/images/itemDetailMaps', false, /\./);
 const mainViewImageContext = require.context('../assets/images/mainViews', false, /\./);
 const mainViewMapImageContext = require.context('../assets/images/mainViewMaps', false, /\./);
 const mainViewOverlayImageContext = require.context('../assets/images/mainViewOverlays', false, /\./);
@@ -71,6 +72,7 @@ const endScreenBackgroundContext = require('../assets/images/endScreenBackground
 
 export let itemImages = undefined;
 export let itemDetailImages = undefined;
+export let itemDetailMapImages = undefined;
 export let mainViewImages = undefined;
 export let mainViewMapImages = undefined;
 export let mainViewOverlayImages = undefined;
@@ -90,6 +92,7 @@ export const loadAssets = (callback) => {
 
 	itemImages = requireAll(itemImageContext, 'IMAGE', callbackIfReady);
   itemDetailImages = requireAll(itemDetailImageContext, 'IMAGE', callbackIfReady);
+  itemDetailMapImages = requireAll(itemDetailMapImageContext, 'IMAGE', callbackIfReady);
 	mainViewImages = requireAll(mainViewImageContext, 'IMAGE', callbackIfReady);
 	mainViewMapImages = requireAll(mainViewMapImageContext, 'IMAGE', callbackIfReady);
 	mainViewOverlayImages = requireAll(mainViewOverlayImageContext, 'IMAGE', callbackIfReady);

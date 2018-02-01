@@ -8,6 +8,7 @@ const initialItemState = {
 const initialItems = {
   board1:       Object.assign({}, initialItemState),
   board2:       Object.assign({}, initialItemState),
+  boards:       Object.assign({}, initialItemState),
   keyToBox:     Object.assign({}, initialItemState),
   keyToDoor:    Object.assign({}, initialItemState),
   keyToDrawer:  Object.assign({}, initialItemState),
@@ -35,6 +36,7 @@ export const useItem = itemName => {
 };
 
 // useItemしなくてOK
+// not tested yet
 export const convertItem = (sourceItemName, targetItemName) => {
   return {
     type: 'CONVERT_ITEM',

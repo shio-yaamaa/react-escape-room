@@ -1,3 +1,6 @@
+// screens
+export const screenBorderRadius = 8;
+
 // loading screen
 export const loadingAnimationRadius = 35;
 export const loadingCircleSize = loadingAnimationRadius / 10 * 2;
@@ -10,14 +13,15 @@ export const itemInHandImageSize = 48;
 export const mainScreenWidth = 480;
 export const mainScreenHeight = 380;
 
-export const mainViewBorderRadius = 8;
-
 // arrow
 export const arrowAreaWidth = 40;
 export const arrowSize = 35;
 
 // detail windows
-export const itemDetailWindowMargin = 70;
+export const itemDetailWindowMargin = mainScreenWidth * 0.1;
+export const itemDetailWindowWidth = mainScreenWidth - itemDetailWindowMargin * 2;
+export const itemDetailWindowHeight = mainScreenHeight - itemDetailWindowMargin * 2;
+export const itemDetailWindowBorderWidth = 3;
 
 // sidebar
 export const itemFrameSize = 55;

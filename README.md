@@ -118,32 +118,7 @@ npmはちょっとでもアップデートしたらnextick-argsみたいなや�
 
 # Todo
 
-```javascript
-itemDetailStatus = {
-  retainedStatus: {
-    stickIsBroken: true
-  },
-  temporalStatus: {
-    notebookPage: 3
-  }
-}
-```
-
-- if the itemImage is completely changed, how should I deal with it?
-
-  同じアイテムと見なすとする
-  1. 二枚のアイテム画像が必要。インデックス管理するのか？
-    全部tissue_00みたいになる
-    item reducerに変更はない
-    itemDetailStatusじゃなくて、itemStatusになる？
-    stateToItemImageIndex(itemStatus)も必要
-  2. retainedStatus: {tissueIsCramped: true/false}
-
-- set the size of <img> elements
-
-- display the maps for item detail images
-
-- itemFrameを指定するobtainItemが必要。optional argumentはitemFrame=nullってしておけばいい
+- sequential motion (like stick protruding into the hanging plant)
 
 - switch languages
 
@@ -203,6 +178,20 @@ Fortunately, Atom automatically applies the JSX syntax highlighting for JSX file
 ## アイテムの背景色
 
 Switch等のようにアイテムの背景色を白((237, 237, 237) or #EDEDED)にして、選択されたときに薄いグレーにすると、白いアイテムが見えないうえ二種類の背景に対するアイテムの色を考えなければならない。Elementsのように濃いグレーにして選択されたときに枠の色のみを変えれば、一種類の背景色しか考慮しなくていいしアイテムも見えやすい。そのため、Elementsを参考にする。
+
+## The way to set the image size
+
+Set it inline as follows:
+
+```html
+<img width={width} src... />
+```
+
+not:
+
+```html
+<img style={{width: width}} src... />
+```
 
 ## アイテムのcursorへの追従
 

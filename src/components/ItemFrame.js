@@ -37,7 +37,7 @@ class ItemFrame extends React.Component {
     		}}
     	>
     		{this.props.itemName !== null && <img
-    			src={itemImages[this.props.itemName].src}
+    			src={itemImages[this.props.itemImage].src}
     			width={itemFrameSize - itemFrameBorderWidth * 2}
     			style={{
             position: 'absolute',
@@ -51,6 +51,7 @@ class ItemFrame extends React.Component {
           ref={magnifyingGlass => this.magnifyingGlass = magnifyingGlass}
           className={'magnifying-glass'}
           width={magnifyingGlassSize}
+          height={magnifyingGlassSize}
           src={magnifyingGlassImage.src}
           style={{
             display: this.props.itemName === null ? 'none' : 'block',
@@ -73,6 +74,7 @@ class ItemFrame extends React.Component {
 ItemFrame.propTypes = {
 	inHand: PropTypes.bool.isRequired,
 	itemName: PropTypes.string, // nullable
+  itemImage: PropTypes.string, // nullable
 	onChangeItemInHand: PropTypes.func.isRequired,
   onChangeItemInDetailWindow: PropTypes.func.isRequired
 };

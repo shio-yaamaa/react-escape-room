@@ -4,10 +4,12 @@ import getPixelRgb from '../utils/getPixelRgb';
 import rgbToHex from '../utils/rgbToHex';
 import hexToColorName from '../utils/hexToColorName';
 import {mainViewMapImages} from '../utils/AssetsLoader';
+import {mainScreenWidth, mainScreenHeight} from '../constants/constants';
 
 class MainViewMap extends React.Component {
 	setMap(filename, context) {
-		context.drawImage(mainViewMapImages[filename], 0, 0);
+    context.clearRect(0, 0, this.canvasSize[0], this.canvasSize[1]);
+		context.drawImage(mainViewMapImages[filename], 0, 0, this.canvasSize[0], this.canvasSize[1]);
 		this.pixelsData = context.getImageData(
 			0, 0,
 			this.canvasSize[0], this.canvasSize[1]
@@ -38,8 +40,8 @@ class MainViewMap extends React.Component {
 		return (
 			<canvas
 				ref={canvas => this.canvas = canvas}
-				width={480}
-				height={380}
+				width={mainScreenWidth}
+				height={mainScreenHeight}
 				style={{
 					position: 'absolute',
 					top: 0,

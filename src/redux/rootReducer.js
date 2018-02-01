@@ -3,7 +3,7 @@ import {screen} from './modules/screen';
 import {gameControl} from './modules/gameControl';
 import {items} from './modules/items';
 import {selectedItem} from './modules/selectedItem';
-import {itemDetailStatus} from './modules/itemDetailStatus';
+import {itemStatus} from './modules/itemStatus';
 import {status} from './modules/status';
 import {perspective} from './modules/perspective';
 
@@ -12,7 +12,7 @@ const rootReducer = combineReducers({
 	gameControl,
 	items,
 	selectedItem,
-  itemDetailStatus,
+  itemStatus,
 	status,
 	perspective
 });

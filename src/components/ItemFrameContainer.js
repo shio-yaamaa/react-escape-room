@@ -3,6 +3,7 @@ import PropTypes from 'prop-types';
 import {connect} from 'react-redux';
 import {changeItemInHand, changeItemInDetailWindow} from '../redux/modules/selectedItem';
 import ItemFrame from './ItemFrame';
+import stateToItemImageIndex from '../scenario/stateToItemImageIndex';
 import {itemFrameMargin} from '../constants/constants';
 
 const ItemFrameContainer = ({itemFrames, onChangeItemInHand, onChangeItemInDetailWindow}) => (
@@ -38,7 +39,8 @@ ItemFrameContainer.propTypes = {
 
 const mapStateToProps = state => {
 	const itemFrames = Array(2 * 5).fill({
-		itemName: null,
+    itemName: null,
+		itemImage: null,
 		inHand: false
 	});
 
@@ -46,7 +48,8 @@ const mapStateToProps = state => {
 		const item = state.items[itemName];
 		if (item.obtainStatus === 'OBTAINED') {
 			itemFrames[item.frameIndex] = {
-				itemName: itemName,
+        itemName: itemName,
+				itemImage: [itemName, stateToItemImageIndex(itemName, state.itemStatus)].join('_'),
 				inHand: state.selectedItem.itemInHand === itemName
 			};
 		}

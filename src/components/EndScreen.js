@@ -1,5 +1,6 @@
 import React from 'react';
 import {endScreenBackground} from '../utils/AssetsLoader';
+import {screenBorderRadius} from '../constants/constants';
 
 const EndScreen = () => (
 	<div style={{
@@ -12,7 +13,8 @@ const EndScreen = () => (
 			top: 0,
 			left: 0,
 			width: '100%',
-			height: '100%'
+			height: '100%',
+      borderRadius: screenBorderRadius
 		}} alt="" />
 		<div style={{
 			display: 'flex',

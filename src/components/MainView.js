@@ -1,13 +1,15 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import {mainViewBorderRadius} from '../constants/constants';
 import {mainViewImages} from '../utils/AssetsLoader';
+import {mainScreenWidth, mainScreenHeight, screenBorderRadius} from '../constants/constants';
 
 const MainView = ({mainViewImage}) => (
 	<img
+    width={mainScreenWidth}
+    height={mainScreenHeight}
 		src={mainViewImages[mainViewImage].src}
 		style={{
-			borderRadius: mainViewBorderRadius
+			borderRadius: screenBorderRadius
 		}}
 		alt=""
 	/>

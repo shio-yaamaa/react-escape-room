@@ -8,7 +8,8 @@ import StartScreen from './StartScreen';
 import LoadScreen from './LoadScreen';
 import EndScreen from './EndScreen';
 import {loadAssets, sounds} from '../utils/AssetsLoader';
-import {marginBetweenMainScreenAndSidebar, mainScreenWidth, mainScreenHeight, sidebarWidth} from '../constants/constants';
+import {screenBorderRadius, marginBetweenMainScreenAndSidebar,
+  mainScreenWidth, mainScreenHeight, sidebarWidth} from '../constants/constants';
 import {backgroundBlack} from '../constants/colors';
 
 class ScreenSwitch extends React.Component {
@@ -87,6 +88,7 @@ class ScreenSwitch extends React.Component {
 				}
 				<div ref={fade => this.fade = fade} style={{
 					...this.screenStyle,
+          borderRadius: screenBorderRadius,
 					opacity: 0,
 					pointerEvents: 'none'
 				}}></div>

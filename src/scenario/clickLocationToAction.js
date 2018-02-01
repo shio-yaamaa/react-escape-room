@@ -1,7 +1,6 @@
 import {changePerspective} from '../redux/modules/perspective';
 import {changeStatus, incrementDialNumber, resetTemporalStatus} from '../redux/modules/status';
 import {obtainItem, useItem} from '../redux/modules/items';
-import {changeItemInHand} from '../redux/modules/selectedItem';
 import isDialNumberCorrect from '../utils/isDialNumberCorrect';
 import {sounds} from '../utils/AssetsLoader';
 
@@ -12,7 +11,7 @@ const playSound = (filename) => {
 	sounds[filename].play();
 };
 
-const clickLocationToAction = (dispatch, perspective, mapIndex, location, status, items, selectedItem, onGameEnd) => {
+const clickLocationToAction = (dispatch, perspective, mapIndex, location, status, items, itemInHand, onGameEnd) => {
 	switch (perspective) {
 
 		// view with sofa
@@ -44,10 +43,9 @@ const clickLocationToAction = (dispatch, perspective, mapIndex, location, status
 					dispatch(changePerspective('viewWithSofa'));
 					return;
 				case 'BLACK': // soil
-					if (selectedItem.itemInHand === 'tissue' && status.retainedStatus.soil === 'ON_PLANTER') {
+					if (itemInHand === 'tissue' && status.retainedStatus.soil === 'ON_PLANTER') {
 						dispatch(changeStatus(true, 'soil', 'WIPED'));
 						dispatch(useItem('tissue'));
-						dispatch(changeItemInHand(null));
 						playSound('wipeSoil');
 					} else if (status.retainedStatus.soil === 'WIPED' && items.keyToLocker3.obtainStatus === 'NOT_OBTAINED') {
 						dispatch(obtainItem('keyToLocker3'));
@@ -65,10 +63,9 @@ const clickLocationToAction = (dispatch, perspective, mapIndex, location, status
 				case 'BLACK': // screw
 					switch (status.retainedStatus.picture) {
 						case 'SCREWED':
-							if (selectedItem.itemInHand === 'screwdriver') {
+							if (itemInHand === 'screwdriver') {
 								dispatch(changeStatus(true, 'picture', 'UNSCREWED'));
 								dispatch(useItem('screwdriver'));
-								dispatch(changeItemInHand(null));
 								playSound('unscrew');
 							}
 							return;
@@ -143,31 +140,31 @@ const clickLocationToAction = (dispatch, perspective, mapIndex, location, status
 							playSound('curtain');
 							return;
 						case 'CURTAIN_OPEN':
-							if (selectedItem.itemInHand === 'board1') {
+							if (itemInHand === 'board1') {
 								dispatch(changeStatus(true, 'window', 'BOARD1'));
 								dispatch(useItem('board1'));
-								dispatch(changeItemInHand(null));
 								playSound('board');
-							} else if (selectedItem.itemInHand === 'board2') {
+							} else if (itemInHand === 'board2') {
 								dispatch(changeStatus(true, 'window', 'BOARD2'));
 								dispatch(useItem('board2'));
-								dispatch(changeItemInHand(null));
 								playSound('board');
-							}
+							} else if (itemInHand === 'boards') {
+                dispatch(changeStatus(true, 'window', 'BOARD1_2'));
+								dispatch(useItem('boards'));
+								playSound('board');
+              }
 							return;
 						case 'BOARD1':
-							if (selectedItem.itemInHand === 'board2') {
+							if (itemInHand === 'board2') {
 								dispatch(changeStatus(true, 'window', 'BOARD1_2'));
 								dispatch(useItem('board2'));
-								dispatch(changeItemInHand(null));
 								playSound('board');
 							}
 							return;
 						case 'BOARD2':
-							if (selectedItem.itemInHand === 'board1') {
+							if (itemInHand === 'board1') {
 								dispatch(changeStatus(true, 'window', 'BOARD2_1'));
 								dispatch(useItem('board1'));
-								dispatch(changeItemInHand(null));
 								playSound('board');
 							}
 							return;
@@ -187,10 +184,9 @@ const clickLocationToAction = (dispatch, perspective, mapIndex, location, status
 					dispatch(resetTemporalStatus('box'));
 					return;
 				case 'BLACK': // lower part of the box
-					if (selectedItem.itemInHand === 'keyToBox') {
+					if (itemInHand === 'keyToBox') {
 						dispatch(changeStatus(true, 'box', 'UNLOCKED'));
 						dispatch(useItem('keyToBox'));
-						dispatch(changeItemInHand(null));
 						playSound('unlock');
 					} else if (status.retainedStatus.box === 'LOCKED') {
 						playSound('locked');
@@ -206,10 +202,9 @@ const clickLocationToAction = (dispatch, perspective, mapIndex, location, status
 					}
 					return;
 				case 'BLUE': // screwdriver
-					if (selectedItem.itemInHand === 'keyToBox') {
+					if (itemInHand === 'keyToBox') {
 						dispatch(changeStatus(true, 'box', 'UNLOCKED'));
 						dispatch(useItem('keyToBox'));
-						dispatch(changeItemInHand(null));
 						playSound('unlock');
 					} else if (status.retainedStatus.box === 'LOCKED') {
 						playSound('locked');
@@ -283,10 +278,9 @@ const clickLocationToAction = (dispatch, perspective, mapIndex, location, status
 							dispatch(resetTemporalStatus('drawer'));
 							return;
 						case 'NAVY': // upper drawer
-							if (selectedItem.itemInHand === 'keyToDrawer') {
+							if (itemInHand === 'keyToDrawer') {
 								dispatch(changeStatus(true, 'upperDrawer', 'UNLOCKED'));
 								dispatch(useItem('keyToDrawer'));
-								dispatch(changeItemInHand(null));
 								playSound('unlock');
 							} else if (status.retainedStatus.upperDrawer === 'UNLOCKED') {
 								dispatch(changeStatus(false, 'drawer', 'UPPER_OPEN'));
@@ -337,10 +331,9 @@ const clickLocationToAction = (dispatch, perspective, mapIndex, location, status
 							dispatch(resetTemporalStatus('drawer'));
 							return;
 						case 'NAVY': // upper drawer
-							if (selectedItem.itemInHand === 'keyToDrawer') {
+							if (itemInHand === 'keyToDrawer') {
 								dispatch(changeStatus(true, 'upperDrawer', 'UNLOCKED'));
 								dispatch(useItem('keyToDrawer'));
-								dispatch(changeItemInHand(null));
 								playSound('unlock');
 							} else if (status.retainedStatus.upperDrawer === 'UNLOCKED') {
 								dispatch(changeStatus(false, 'drawer', 'UPPER_OPEN'));
@@ -418,10 +411,9 @@ const clickLocationToAction = (dispatch, perspective, mapIndex, location, status
 							dispatch(resetTemporalStatus('locker'));
 							return;
 						case 'NAVY': // locker1
-							if (selectedItem.itemInHand === 'keyToLocker1') {
+							if (itemInHand === 'keyToLocker1') {
 								dispatch(changeStatus(true, 'locker1', 'UNLOCKED'));
 								dispatch(useItem('keyToLocker1'));
-								dispatch(changeItemInHand(null));
 								playSound('unlock');
 							} else if (status.retainedStatus.locker1 === 'UNLOCKED') {
 								dispatch(changeStatus(false, 'locker', 'LOCKER1_OPEN'));
@@ -447,10 +439,9 @@ const clickLocationToAction = (dispatch, perspective, mapIndex, location, status
 							}
 							return;
 						case 'TEAL': // locker3
-							if (selectedItem.itemInHand === 'keyToLocker3') {
+							if (itemInHand === 'keyToLocker3') {
 								dispatch(changeStatus(true, 'locker3', 'UNLOCKED'));
 								dispatch(useItem('keyToLocker3'));
-								dispatch(changeItemInHand(null));
 								playSound('unlock');
 							} else if (status.retainedStatus.locker3 === 'UNLOCKED') {
 								dispatch(changeStatus(false, 'locker', 'LOCKER3_OPEN'));
@@ -493,10 +484,9 @@ const clickLocationToAction = (dispatch, perspective, mapIndex, location, status
 							}
 							return;
 						case 'TEAL': // locker3
-							if (selectedItem.itemInHand === 'keyToLocker3') {
+							if (itemInHand === 'keyToLocker3') {
 								dispatch(changeStatus(true, 'locker3', 'UNLOCKED'));
 								dispatch(useItem('keyToLocker3'));
-								dispatch(changeItemInHand(null));
 								playSound('unlock');
 							} else if (status.retainedStatus.locker3 === 'UNLOCKED') {
 								dispatch(changeStatus(false, 'locker', 'LOCKER3_OPEN'));
@@ -508,12 +498,14 @@ const clickLocationToAction = (dispatch, perspective, mapIndex, location, status
 						case 'AZURE': // tissue
 							if (items.tissue.obtainStatus === 'NOT_OBTAINED') {
 								dispatch(obtainItem('tissue'));
+                playSound('tissue');
 								playSound('obtainItem');
 							}
 							return;
 						case 'LIME': // tissue box
 							if (items.tissue.obtainStatus === 'NOT_OBTAINED') {
 								dispatch(obtainItem('tissue'));
+                playSound('tissue');
 								playSound('obtainItem');
 							} else {
 								dispatch(changePerspective('tissueBox'));
@@ -533,10 +525,9 @@ const clickLocationToAction = (dispatch, perspective, mapIndex, location, status
 							dispatch(resetTemporalStatus('locker'));
 							return;
 						case 'NAVY': // locker1
-							if (selectedItem.itemInHand === 'keyToLocker1') {
+							if (itemInHand === 'keyToLocker1') {
 								dispatch(changeStatus(true, 'locker1', 'UNLOCKED'));
 								dispatch(useItem('keyToLocker1'));
-								dispatch(changeItemInHand(null));
 								playSound('unlock');
 							} else if (status.retainedStatus.locker1 === 'UNLOCKED') {
 								dispatch(changeStatus(false, 'locker', 'LOCKER1_OPEN'));
@@ -556,10 +547,9 @@ const clickLocationToAction = (dispatch, perspective, mapIndex, location, status
 							playSound('closeLocker');
 							return;
 						case 'TEAL': // locker3
-							if (selectedItem.itemInHand === 'keyToLocker3') {
+							if (itemInHand === 'keyToLocker3') {
 								dispatch(changeStatus(true, 'locker3', 'UNLOCKED'));
 								dispatch(useItem('keyToLocker3'));
-								dispatch(changeItemInHand(null));
 								playSound('unlock');
 							} else if (status.retainedStatus.locker3 === 'UNLOCKED') {
 								dispatch(changeStatus(false, 'locker', 'LOCKER3_OPEN'));
@@ -582,10 +572,9 @@ const clickLocationToAction = (dispatch, perspective, mapIndex, location, status
 							dispatch(resetTemporalStatus('locker'));
 							return;
 						case 'NAVY':
-							if (selectedItem.itemInHand === 'keyToLocker1') {
+							if (itemInHand === 'keyToLocker1') {
 								dispatch(changeStatus(true, 'locker1', 'UNLOCKED'));
 								dispatch(useItem('keyToLocker1'));
-								dispatch(changeItemInHand(null));
 								playSound('unlock');
 							} else if (status.retainedStatus.locker1 === 'UNLOCKED') {
 								dispatch(changeStatus(false, 'locker', 'LOCKER1_OPEN'));
@@ -671,10 +660,9 @@ const clickLocationToAction = (dispatch, perspective, mapIndex, location, status
 					dispatch(changePerspective('viewWithSofa'));
 					return;
 				case 'BLACK': // door
-					if (selectedItem.itemInHand === 'keyToDoor') {
+					if (itemInHand === 'keyToDoor') {
 						dispatch(changeStatus(true, 'door', 'UNLOCKED'));
 						dispatch(useItem('keyToDoor'));
-						dispatch(changeItemInHand(null));
 						playSound('unlock');
 					} else if (status.retainedStatus.door === 'LOCKED') {
 						playSound('locked');
@@ -686,10 +674,9 @@ const clickLocationToAction = (dispatch, perspective, mapIndex, location, status
 					}
 					return;
 				case 'NAVY': // opened part of door
-					if (selectedItem.itemInHand === 'keyToDoor') {
+					if (itemInHand === 'keyToDoor') {
 						dispatch(changeStatus(true, 'door', 'UNLOCKED'));
 						dispatch(useItem('keyToDoor'));
-						dispatch(changeItemInHand(null));
 						playSound('unlock');
 					} else if (status.retainedStatus.door === 'LOCKED') {
 						playSound('locked');
@@ -713,18 +700,16 @@ const clickLocationToAction = (dispatch, perspective, mapIndex, location, status
 					dispatch(changePerspective('viewWithDoor'));
 					return;
 				case 'BLACK': // where stick can stick
-					if (selectedItem.itemInHand === 'stick') {
+					if (itemInHand === 'stick') {
 						dispatch(changeStatus(true, 'hangingPlant', 'KEY_FOUND'));
 						dispatch(useItem('stick'));
-						dispatch(changeItemInHand(null));
 						playSound('stick');
 					}
 					return;
 				case 'NAVY': // keyToBox
-					if (selectedItem.itemInHand === 'stick') {
+					if (itemInHand === 'stick') {
 						dispatch(changeStatus(true, 'hangingPlant', 'KEY_FOUND'));
 						dispatch(useItem('stick'));
-						dispatch(changeItemInHand(null));
 						playSound('stick');
 					} else if (status.retainedStatus.hangingPlant === 'KEY_FOUND' && items.keyToBox.obtainStatus === 'NOT_OBTAINED') {
 						dispatch(obtainItem('keyToBox'));
