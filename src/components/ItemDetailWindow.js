@@ -2,7 +2,9 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import ItemDetailView from './ItemDetailView';
 import ItemDetailViewMap from './ItemDetailViewMap';
-import {itemDetailWindowWidth, itemDetailWindowHeight} from '../constants/constants';
+import {itemDetailWindowWidth, itemDetailWindowHeight,
+  itemDetailWindowBorderRadius, itemDetailWindowBorderWidth} from '../constants/constants';
+import {behindItemDetailWindowColor, itemDetailWindowBorderColor, itemBackgroundColor} from '../constants/colors';
 
 const ItemDetailWindow = ({itemDetailImage, itemDetailMapImage, onItemDetailViewClick, onItemDetailWindowCancel}) => (
   <div style={{
@@ -14,15 +16,15 @@ const ItemDetailWindow = ({itemDetailImage, itemDetailMapImage, onItemDetailView
     top: 0,
     width: '100%',
     height: '100%',
-    backgroundColor: 'rgba(0, 0, 0, 0.7)'
+    backgroundColor: behindItemDetailWindowColor
   }} onClick={onItemDetailWindowCancel}>
     <div style={{
       position: 'relative',
       width: itemDetailWindowWidth,
       height: itemDetailWindowHeight,
-      borderRadius: 13,
-      border: '3px solid #999999',
-      backgroundColor: '#333333'
+      borderRadius: itemDetailWindowBorderRadius,
+      border: `${itemDetailWindowBorderWidth}px solid ${itemDetailWindowBorderColor}`,
+      backgroundColor: itemBackgroundColor
     }} onClick={event => event.stopPropagation()}>
       <ItemDetailView itemDetailImage={itemDetailImage} />
       <ItemDetailViewMap

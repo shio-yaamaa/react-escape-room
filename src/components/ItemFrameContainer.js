@@ -4,27 +4,26 @@ import {connect} from 'react-redux';
 import {changeItemInHand, changeItemInDetailWindow} from '../redux/modules/selectedItem';
 import ItemFrame from './ItemFrame';
 import stateToItemImageIndex from '../scenario/stateToItemImageIndex';
-import {itemFrameMargin} from '../constants/constants';
 
 const ItemFrameContainer = ({itemFrames, onChangeItemInHand, onChangeItemInDetailWindow}) => (
-	<div style={{
-		display: 'flex',
-		flexWrap: 'wrap',
-    justifyContent: 'center',
-    alignContent: 'flex-start',
-		width: '100%',
-		height: '90%',
-    marginTop: itemFrameMargin * -1
-	}}>
-		{itemFrames.map((itemFrame, index) => (
-			<ItemFrame
-				key={index}
-				{...itemFrame}
-				onChangeItemInHand={onChangeItemInHand}
-        onChangeItemInDetailWindow={onChangeItemInDetailWindow}
-			/>
-		))}
-	</div>
+  <table style={{borderCollapse: 'collapse'}}><tbody>
+    {itemFrames.map((element, rowStartIndex) => {
+      if (rowStartIndex % 2 === 1) {
+        return null;
+      }
+      return (<tr key={rowStartIndex}>
+        {itemFrames.slice(rowStartIndex, rowStartIndex + 2).map((itemFrame, indexInRow) => (
+          <td style={{padding: 0}} key={rowStartIndex + indexInRow}>
+            <ItemFrame
+              {...itemFrame}
+              onChangeItemInHand={onChangeItemInHand}
+              onChangeItemInDetailWindow={onChangeItemInDetailWindow}
+            />
+          </td>
+        ))}
+      </tr>);
+    })}
+  </tbody></table>
 );
 
 ItemFrameContainer.propTypes = {

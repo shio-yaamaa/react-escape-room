@@ -1,18 +1,21 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import {itemFrameSize, itemFrameMargin, itemFrameBorderWidth, magnifyingGlassSize} from '../constants/constants';
+import {itemBackgroundColor, itemFrameHoveredBorderColor, itemInHandFrameBorderColor} from '../constants/colors';
 import {itemImages, magnifyingGlassImage} from '../utils/AssetsLoader';
 
 class ItemFrame extends React.Component {
   componentDidMount() {
     this.itemFrame.addEventListener('mouseenter', () => {
       this.itemFrame.style.borderColor = this.props.inHand
-        ? 'white'
-        : (this.props.itemName === null ? 'trasparent' : '#666666');
+        ? itemInHandFrameBorderColor
+        : (this.props.itemName === null ? 'trasparent' : itemFrameHoveredBorderColor);
       this.magnifyingGlass.style.visibility = 'visible';
     });
     this.itemFrame.addEventListener('mouseleave', () => {
-      this.itemFrame.style.borderColor = this.props.inHand ? 'white' : 'transparent';
+      this.itemFrame.style.borderColor = this.props.inHand
+        ? itemInHandFrameBorderColor
+        : 'transparent';
       this.magnifyingGlass.style.visibility = 'hidden';
     });
   }
@@ -27,7 +30,7 @@ class ItemFrame extends React.Component {
     			height: itemFrameSize,
     			margin: itemFrameMargin,
     			borderRadius: 5,
-          backgroundColor: '#333333',
+          backgroundColor: itemBackgroundColor,
           border: `${itemFrameBorderWidth}px solid ${this.props.inHand ? 'white' : 'transparent'}`
     		}}
     		onClick={() => {

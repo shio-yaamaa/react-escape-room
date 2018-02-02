@@ -17,12 +17,12 @@ to start the development server
 			<LoadScreen>
 			<div> // fade
 
-			<Game container> // save, hint, cursorなどゲーム全体の統括、重ねるdivのためrelative
+			<Game container> // manages functions that related to the whole game, like save, hint, and cursor
 				<div> // aligns MainScreen and Sidebar horizontally
-					<MainScreen container> // handles actions when either the MainViewMap or ArrowArea is clicked
+					<MainScreen container> // handles click events on MainViewMap, ArrowArea, and ItemDetailWindow
 						<MainView>
-						<MainViewOverlay> // dial etc.
-						<MainViewMap> // opacity: 0
+						<MainViewOverlay> // additional images on the MainView like dial
+						<MainViewMap>
 						<ArrowArea> x4 // fire events when they (not their children!) are clicked
             <ItemDetailWindow>
               <ItemDetailView>
@@ -43,8 +43,6 @@ perspectiveとitem名はファイル名にもなるからcamel caseにする。
 
 actionsはcontainer componentがMainScreenにpropとして渡す？
 そしたら、actionの中にthis.changeStatus('door', 'UNLOCKED')とかthis.obtainItem('driver')とかthis.useItem('doorKey')って感じで自分とこの関数を渡せる。
-
-SEの再生はどこで？this.playSound()でいいか。obtainItemでは自動で音がなるようにするし、それならcontainerの方で音データが必要だから。
 
 ```javascript
 actions = [

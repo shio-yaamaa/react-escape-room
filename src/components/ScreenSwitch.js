@@ -8,8 +8,8 @@ import StartScreen from './StartScreen';
 import LoadScreen from './LoadScreen';
 import EndScreen from './EndScreen';
 import {loadAssets, sounds} from '../utils/AssetsLoader';
-import {screenBorderRadius, marginBetweenMainScreenAndSidebar,
-  mainScreenWidth, mainScreenHeight, sidebarWidth} from '../constants/constants';
+import {screenBorderRadius, wholeScreenWidth, mainScreenHeight,
+  screenVerticalMargin, screenHorizontalMargin} from '../constants/constants';
 import {backgroundBlack} from '../constants/colors';
 
 class ScreenSwitch extends React.Component {
@@ -65,10 +65,9 @@ class ScreenSwitch extends React.Component {
 		return (
 			<div id="screen-switch" style={{
 				position: 'relative',
-				width: marginBetweenMainScreenAndSidebar + mainScreenWidth + sidebarWidth,
+				width: wholeScreenWidth,
 				height: mainScreenHeight,
-				marginLeft: 'auto',
-				marginRight: 'auto'
+				margin: `${screenVerticalMargin}px ${screenHorizontalMargin}px`
 			}}>
 				{this.props.screen === 'start' &&
 					<div style={this.screenStyle}>

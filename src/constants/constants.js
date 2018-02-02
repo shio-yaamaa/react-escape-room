@@ -22,6 +22,7 @@ export const itemDetailWindowMargin = mainScreenWidth * 0.1;
 export const itemDetailWindowWidth = mainScreenWidth - itemDetailWindowMargin * 2;
 export const itemDetailWindowHeight = mainScreenHeight - itemDetailWindowMargin * 2;
 export const itemDetailWindowBorderWidth = 3;
+export const itemDetailWindowBorderRadius = 13;
 
 // sidebar
 export const itemFrameSize = 55;
@@ -39,3 +40,12 @@ export const dialCenterPositions = [
 	[199 + dialWidth / 2, 149 + dialHeight / 2],
 	[272 + dialWidth / 2, 149 + dialHeight / 2]
 ];
+
+// hint
+export const hintPadding = 20;
+export const hintBorderRadius = 5;
+
+// whole screen
+export const wholeScreenWidth = marginBetweenMainScreenAndSidebar + mainScreenWidth + sidebarWidth;
+export const screenVerticalMargin = 50;
+export const screenHorizontalMargin = 20;

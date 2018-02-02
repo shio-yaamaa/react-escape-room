@@ -1,5 +1,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
+import {wholeScreenWidth, hintPadding, hintBorderRadius} from '../constants/constants';
+import {behindHintColor, hintBackgroundColor} from '../constants/colors';
 
 const Hint = ({hint, onHintCancel}) => (
 	<div style={{
@@ -9,17 +11,17 @@ const Hint = ({hint, onHintCancel}) => (
 		position: 'absolute',
 		left: 0,
 		top: 0,
-		width: '100%',
+		width: wholeScreenWidth,
 		height: '100%',
-		backgroundColor: 'rgba(0, 0, 0, 0.4)'
+		backgroundColor: behindHintColor
 	}} onClick={onHintCancel}>
 		<div style={{
 			width: '70%',
 			height: 'auto',
 			maxHeight: '80%',
-			padding: 20,
-			borderRadius: 5,
-			backgroundColor: 'rgba(255, 255, 255, 0.8)',
+			padding: hintPadding,
+			borderRadius: hintBorderRadius,
+			backgroundColor: hintBackgroundColor,
 			boxShadow: '0px 0px 20px 0px rgba(0, 0, 0, 0.3)',
 			overflow: 'auto'
 		}} onClick={event => event.stopPropagation()}>

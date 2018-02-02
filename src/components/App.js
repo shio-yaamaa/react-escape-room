@@ -1,5 +1,6 @@
 import React from 'react';
 import ScreenSwitch from './ScreenSwitch';
+import {wholeScreenWidth, screenHorizontalMargin} from '../constants/constants';
 import {backgroundBlack} from '../constants/colors';
 
 const App = () => (
@@ -8,8 +9,11 @@ const App = () => (
 	}}>
 	  <h1>脱出ゲーム テスト</h1>
 	  <div style={{
-	  	paddingTop: 50,
-	  	paddingBottom: 50,
+      display: 'inline-flex',
+      alignItems: 'center',
+      justifyContent: 'center',
+      width: '100%',
+      minWidth: `${wholeScreenWidth + screenHorizontalMargin * 2}px`,
 	    backgroundColor: backgroundBlack
 	  }}>
 	    <ScreenSwitch />
