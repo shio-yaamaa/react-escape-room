@@ -13,28 +13,29 @@ import MainViewOverlay from './MainViewOverlay';
 import MainViewMap from './MainViewMap';
 import ArrowArea from './ArrowArea';
 import ItemDetailWindow from './ItemDetailWindow';
+import {endMotion} from '../redux/modules/gameControl';
 import {changeItemInDetailWindow} from '../redux/modules/selectedItem';
 import {dialCenterPositions} from '../constants/constants';
 
 const MainScreen = ({state, mapIndex, mainViewImage, mainViewOverlays, mainViewMapImage,
-  arrowDirections, itemDetailImage, itemDetailMapImage, itemDetailMapIndex,
-  onGameEnd, onMainScreenClick, onItemDetailWindowClick, onItemDetailWindowCancel}) => (
+  motion, motionCallback, arrowDirections, itemDetailImage, itemDetailMapImage, itemDetailMapIndex,
+  onGameEnd, onMainScreenClick, onMotionEnd, onItemDetailWindowClick, onItemDetailWindowCancel}) => (
 	<div style={{
 		position: 'relative',
 		width: 480,
 		height: '100%'
 	}}>
-		<MainView mainViewImage={mainViewImage} />
+		<MainView mainViewImage={mainViewImage} motion={motion} onMotionEnd={() => onMotionEnd(motionCallback)} />
 		<MainViewOverlay mainViewOverlays={mainViewOverlays} />
 		<MainViewMap
 			mainViewMapImage={mainViewMapImage}
-			onMainViewClick={(color) => onMainScreenClick(state, mapIndex, color, onGameEnd)}
+			onMainViewClick={(color) => onMainScreenClick(state, mapIndex, color, motion !== null, onGameEnd)}
 		/>
 		{arrowDirections.map(direction => (
 			<ArrowArea
 				key={direction}
 				direction={direction}
-				onArrowClick={(direction) => onMainScreenClick(state, mapIndex, direction, onGameEnd)}
+				onArrowClick={(direction) => onMainScreenClick(state, mapIndex, direction, motion !== null, onGameEnd)}
 			/>
 		))}
     {itemDetailImage !== null &&
@@ -60,12 +61,15 @@ MainScreen.propTypes = {
     })
 	).isRequired,
 	mainViewMapImage: PropTypes.string.isRequired,
+  motion: PropTypes.array, // nullable
+  motionCallback: PropTypes.func, // nullable
 	arrowDirections: PropTypes.arrayOf(PropTypes.string).isRequired,
   itemDetailImage: PropTypes.string, // nullable
   itemDetailMapImage: PropTypes.string, // nullable
   itemDetailMapIndex: PropTypes.string, // nullable
 	onGameEnd: PropTypes.func.isRequired,
 	onMainScreenClick: PropTypes.func.isRequired,
+  onMotionEnd: PropTypes.func.isRequired,
   onItemDetailWindowClick: PropTypes.func.isRequired,
   onItemDetailWindowCancel: PropTypes.func.isRequired
 };
@@ -102,6 +106,8 @@ const mapStateToProps = (state, ownProps) => {
 		].join('_'),
 		mainViewOverlays: calculateOverlays(state),
 		mainViewMapImage: [state.perspective, mapIndex].join('_'),
+    motion: state.gameControl.motion,
+    motionCallback: state.gameControl.motionCallback,
 		arrowDirections: arrowDirections[state.perspective],
     itemDetailImage: state.selectedItem.itemInDetailWindow === null ? null : [
       state.selectedItem.itemInDetailWindow,
@@ -119,7 +125,7 @@ const mapStateToProps = (state, ownProps) => {
 
 const mapDispatchToProps = dispatch => {
 	return {
-		onMainScreenClick: (state, mapIndex, location, onGameEnd) => {
+		onMainScreenClick: (state, mapIndex, location, isInMotion, onGameEnd) => {
 			clickLocationToAction(
 				dispatch,
 				state.perspective,
@@ -128,9 +134,14 @@ const mapDispatchToProps = dispatch => {
 				state.status,
 				state.items,
 				state.selectedItem.itemInHand,
+        isInMotion,
 				onGameEnd
 			);
 		},
+    onMotionEnd: motionCallback => {
+      dispatch(endMotion());
+      motionCallback.call();
+    },
     onItemDetailWindowClick: (state, mapIndex, location) => {
       itemDetailClickLocationToAction(
         dispatch,

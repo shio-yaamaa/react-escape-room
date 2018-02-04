@@ -1,17 +1,28 @@
+import {startMotion} from '../redux/modules/gameControl';
 import {changePerspective} from '../redux/modules/perspective';
 import {changeStatus, incrementDialNumber, resetTemporalStatus} from '../redux/modules/status';
 import {obtainItem, useItem} from '../redux/modules/items';
 import isDialNumberCorrect from '../utils/isDialNumberCorrect';
 import {sounds} from '../utils/AssetsLoader';
 
-// 観葉植物に棒を突っ込んでいる間は、下矢印を押されても無視
-// mapIndexはstringなことに注意
+// ignore any clicks while in motions
+// mapIndex are not int but string
+
+const stickMotion = [
+  {
+    mainViewImage: 'hangingPlant_01',
+    duration: 1500
+  }
+];
 
 const playSound = (filename) => {
 	sounds[filename].play();
 };
 
-const clickLocationToAction = (dispatch, perspective, mapIndex, location, status, items, itemInHand, onGameEnd) => {
+const clickLocationToAction = (dispatch, perspective, mapIndex, location, status, items, itemInHand, isInMotion, onGameEnd) => {
+  if (isInMotion) {
+    return;
+  }
 	switch (perspective) {
 
 		// view with sofa
@@ -701,16 +712,20 @@ const clickLocationToAction = (dispatch, perspective, mapIndex, location, status
 					return;
 				case 'BLACK': // where stick can stick
 					if (itemInHand === 'stick') {
-						dispatch(changeStatus(true, 'hangingPlant', 'KEY_FOUND'));
-						dispatch(useItem('stick'));
 						playSound('stick');
+            dispatch(startMotion(stickMotion, () => {
+              dispatch(changeStatus(true, 'hangingPlant', 'KEY_FOUND'));
+  						dispatch(useItem('stick'));
+            }));
 					}
 					return;
 				case 'NAVY': // keyToBox
 					if (itemInHand === 'stick') {
-						dispatch(changeStatus(true, 'hangingPlant', 'KEY_FOUND'));
-						dispatch(useItem('stick'));
 						playSound('stick');
+            dispatch(startMotion(stickMotion, () => {
+              dispatch(changeStatus(true, 'hangingPlant', 'KEY_FOUND'));
+  						dispatch(useItem('stick'));
+            }));
 					} else if (status.retainedStatus.hangingPlant === 'KEY_FOUND' && items.keyToBox.obtainStatus === 'NOT_OBTAINED') {
 						dispatch(obtainItem('keyToBox'));
 						playSound('obtainItem');

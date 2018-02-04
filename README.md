@@ -116,8 +116,6 @@ npmはちょっとでもアップデートしたらnextick-argsみたいなや�
 
 # Todo
 
-- sequential motion (like stick protruding into the hanging plant)
-
 - switch languages
 
 - If expanding is disabled on smartphones, can sequencial taps be recognized?
@@ -126,8 +124,6 @@ npmはちょっとでもアップデートしたらnextick-argsみたいなや�
 
 - Can JavaScript embedded in Hatena blog articles?
 
-- If gameControl solely consists of hint after all, raise hint in the state hierarchy (like I did for screen).
-
 # Bugs
 
 - Android browsers don't play some of the SEs.
@@ -135,6 +131,8 @@ npmはちょっとでもアップデートしたらnextick-argsみたいなや�
   - The default browser doesn't play flipCarpet etc.
 
   - Chrome doesn't play long SEs like start and end. It can be debugged using the Chrome debugging tool.
+
+- Can't use MainViewOverlay during motions.
 
 # The reasons for specifications
 
@@ -160,7 +158,7 @@ Save a event rather than a state. It's weird to update the state when the save e
 
 ## Component/container structure
 
-Export the connect()-ed object as the component itself. As described in [this article](https://marmelab.com/blog/2015/12/17/react-directory-structure.html), the inner component is only used in its container.
+Export the ```connect()```ed object as the component itself. As described in [this article](https://marmelab.com/blog/2015/12/17/react-directory-structure.html), the inner component is only used in its container.
 
 Put component and container files in the same folder. They are different only in whether they are provided with state and dispatch(), and they are in the same component hierarchy. If they are put in the separate folders, I might be like [him](https://github.com/reactjs/redux/issues/1618). If the component folder has too many files, separate them according to their features.
 
@@ -168,6 +166,14 @@ Put component and container files in the same folder. They are different only in
 
 Extension should be .js since React doesn't import .jsx files unless you put '.jsx' when importing or modify the Webpack's config file, which requires ejecting.
 Fortunately, Atom automatically applies the JSX syntax highlighting for JSX files with .js extension! (Sublime doesn't as long as I know, though)
+
+## ItemFrameContainer
+
+ItemFrameContainer is not a div with ```display: flex``` but a table because a table can have the fixed item count per row. Also, when I used flex layout, all ItemFrames are aligned vertically in a narrow window though ItemFrameContainer has sufficient width to accommodate two ItemFrames in a row.
+
+## Disable any user interaction during motion
+
+Actions dispatched in clickLocationToAction during motion can cause some contradictory state because the final state achieved by the motion does not realize until the end of the motion. Saving the game state during motion can cause some weird state being saved, and showing hint or ItemDetailWindow would change the state, which will force the redraw of MainView. Considering these possibilities, it is safer to disable all the user interaction during the motion.
 
 ## loadAssetsが走る以前のassetsの利用
 
@@ -227,7 +233,7 @@ not:
 
 - ちょっと画面遷移のときにフェードさせたいみたいなのが難しい
 
-- （Unityと比較して）一部だけ絵を変えることができない。例えばNeutralさんのSIGNみたいに3Dのものをはめ込むことはできない
+- （Unityと比較して）一部だけ絵を変えることができない。例えばNeutralさんのSIGNみたいに3Dのものをはめ込む方法が何パターンもあるとかだとお手上げ
 
 - メソッドの発火に使う引数を延々と下に持っていくか、関係ない中間層で発火させちゃうかっていうジレンマ
 

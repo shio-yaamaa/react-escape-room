@@ -5,7 +5,7 @@ import {changeItemInHand, changeItemInDetailWindow} from '../redux/modules/selec
 import ItemFrame from './ItemFrame';
 import stateToItemImageIndex from '../scenario/stateToItemImageIndex';
 
-const ItemFrameContainer = ({itemFrames, onChangeItemInHand, onChangeItemInDetailWindow}) => (
+const ItemFrameContainer = ({itemFrames, isInMotion, onChangeItemInHand, onChangeItemInDetailWindow}) => (
   <table style={{borderCollapse: 'collapse'}}><tbody>
     {itemFrames.map((element, rowStartIndex) => {
       if (rowStartIndex % 2 === 1) {
@@ -16,8 +16,16 @@ const ItemFrameContainer = ({itemFrames, onChangeItemInHand, onChangeItemInDetai
           <td style={{padding: 0}} key={rowStartIndex + indexInRow}>
             <ItemFrame
               {...itemFrame}
-              onChangeItemInHand={onChangeItemInHand}
-              onChangeItemInDetailWindow={onChangeItemInDetailWindow}
+              onChangeItemInHand={itemName => {
+                if (!isInMotion) {
+                  onChangeItemInHand(itemName);
+                }
+              }}
+              onChangeItemInDetailWindow={itemName => {
+                if (!isInMotion) {
+                  onChangeItemInDetailWindow(itemName);
+                }
+              }}
             />
           </td>
         ))}
@@ -54,7 +62,10 @@ const mapStateToProps = state => {
 		}
 	});
 
-	return {itemFrames};
+	return {
+    itemFrames: itemFrames,
+    isInMotion: state.gameControl.motion !== null
+  };
 }
 
 const mapDispatchToProps = dispatch => {

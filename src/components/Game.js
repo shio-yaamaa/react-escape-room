@@ -90,8 +90,16 @@ class Game extends React.Component {
 				}}>
 					<MainScreen onGameEnd={this.props.onGameEnd} />
 					<Sidebar
-						onSaveClick={this.handleSave.bind(this)}
-						onHintClick={this.props.onHintClick}
+						onSaveClick={() => {
+              if (!this.props.isInMotion) {
+                this.handleSave.call(this);
+              }
+            }}
+						onHintClick={() => {
+              if (!this.props.isInMotion) {
+                this.props.onHintClick()
+              }
+            }}
 					/>
 				</div>
 				{this.props.hint !== null && <Hint hint={this.props.hint} onHintCancel={this.props.onHintCancel} />}
@@ -126,6 +134,7 @@ class Game extends React.Component {
 Game.propTypes = {
 	itemInHandImage: PropTypes.string, // nullable
 	stateToSave: PropTypes.object.isRequired,
+  isInMotion: PropTypes.bool.isRequired,
 	hint: PropTypes.string, // nullable
 	onGameEnd: PropTypes.func.isRequired,
 	onHintClick: PropTypes.func.isRequired,
@@ -139,6 +148,7 @@ const mapStateToProps = (state, ownProps) => {
       stateToItemImageIndex(state.selectedItem.itemInHand, state.itemStatus)
     ].join('_'),
 		stateToSave: state,
+    isInMotion: state.gameControl.motion !== null,
 		hint: state.gameControl.isHintVisible ? stateToHint(state.status, state.items) : null,
 		onGameEnd: ownProps.onGameEnd
 	};
