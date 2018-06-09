@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<svg
+   xmlns:dc="http://purl.org/dc/elements/1.1/"
+   xmlns:cc="http://creativecommons.org/ns#"
+   xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#"
+   xmlns:svg="http://www.w3.org/2000/svg"
+   xmlns="http://www.w3.org/2000/svg"
+   width="69"
+   height="81"
+   viewBox="0 0 18.25625 21.431251"
+   version="1.1"
+   id="svg8">
+  <defs
+     id="defs2" />
+  <metadata
+     id="metadata5">
+    <rdf:RDF>
+      <cc:Work
+         rdf:about="">
+        <dc:format>image/svg+xml</dc:format>
+        <dc:type
+           rdf:resource="http://purl.org/dc/dcmitype/StillImage" />
+        <dc:title></dc:title>
+      </cc:Work>
+    </rdf:RDF>
+  </metadata>
+  <g
+     id="layer1"
+     transform="translate(0,-275.56873)">
+    <g
+       id="flowRoot4485"
+       style="font-style:normal;font-weight:normal;font-size:48px;line-height:1.25;font-family:sans-serif;letter-spacing:0px;word-spacing:0px;fill:#000000;fill-opacity:1;stroke:none"
+       transform="matrix(0.26458333,0,0,0.26458333,1.6004193,269.35671)"
+       aria-label="6">
+      <path
+         id="path4499"
+         style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:85.33333588px;font-family:'Californian FB';-inkscape-font-specification:'Californian FB'"
+         d="m 45.826173,73.270184 q 0,6.958333 -2.083333,10.75 -2.458334,4.541667 -6.458334,6.708334 -2.291667,1.25 -3.5,1.541667 -1.333333,0.25 -5.208333,0.25 -9.208334,0 -13.833334,-7.750001 -3.666667,-6.125 -3.666667,-15.291667 0,-9.583333 4.541667,-18.125 4.416667,-8.250001 11.25,-12.250001 6.25,-3.666667 14.750001,-3.666667 3.833333,0 3.833333,1.375001 0,0.875 -1.791667,0.875 -1.083333,0 -4.166667,0.416666 -3.458333,0.5 -4.791666,1 -5.416667,2.125 -9.125001,5.833334 -5.166666,5.166667 -7.333333,11.666667 -0.416667,1.333333 0.125,1.333333 0.25,0 0.625,-0.291667 1.875,-0.916666 4.375,-2.125 3.291667,-1.708333 8,-1.708333 3.041667,0 5.75,1.625 1.666667,1 2.375,1.583333 1.208334,1 2.625001,2.833334 3.708333,4.708333 3.708333,13.416667 z m -4.625,4.75 q 0,-8.458333 -2.458334,-12.541667 -3.125,-5.125 -6.416666,-6.041667 -2.75,-0.791666 -7.000001,-0.791666 -4.958333,0 -8.125,2.583333 -0.375,0.333333 -0.5,1.375 -0.25,2.416667 -0.25,5.083333 0,10.041667 3.75,15.291668 4.958334,6.916666 12.458334,6.916666 2.958333,0 4.375,-1.291666 4.166667,-3.833334 4.166667,-10.583334 z" />
+    </g>
+  </g>
+</svg>

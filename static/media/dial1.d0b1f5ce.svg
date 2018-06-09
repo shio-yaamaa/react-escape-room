@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<svg
+   xmlns:dc="http://purl.org/dc/elements/1.1/"
+   xmlns:cc="http://creativecommons.org/ns#"
+   xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#"
+   xmlns:svg="http://www.w3.org/2000/svg"
+   xmlns="http://www.w3.org/2000/svg"
+   width="69"
+   height="81"
+   viewBox="0 0 18.25625 21.431251"
+   version="1.1"
+   id="svg8">
+  <defs
+     id="defs2" />
+  <metadata
+     id="metadata5">
+    <rdf:RDF>
+      <cc:Work
+         rdf:about="">
+        <dc:format>image/svg+xml</dc:format>
+        <dc:type
+           rdf:resource="http://purl.org/dc/dcmitype/StillImage" />
+        <dc:title></dc:title>
+      </cc:Work>
+    </rdf:RDF>
+  </metadata>
+  <g
+     id="layer1"
+     transform="translate(0,-275.56873)">
+    <g
+       id="flowRoot4485"
+       style="font-style:normal;font-weight:normal;font-size:48px;line-height:1.25;font-family:sans-serif;letter-spacing:0px;word-spacing:0px;fill:#000000;fill-opacity:1;stroke:none"
+       transform="matrix(0.26458333,0,0,0.26458333,3.1713828,269.41183)"
+       aria-label="1">
+      <path
+         id="path4487"
+         style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:85.33333588px;font-family:'Californian FB';-inkscape-font-specification:'Californian FB'"
+         d="m 34.284506,91.436851 q 0,0.416667 -0.333333,0.416667 H 11.159505 q -0.416666,0 -0.416666,-0.5 v -1.375 q 0,-0.5 0.416666,-0.5 h 7.583334 q 0.875,0 0.875,-2.25 0,-0.458334 0.08333,-18.875001 0.08333,-18.458334 0.08333,-19 0,-5.958334 -0.25,-7.666667 -0.416667,-2.833334 -4.541667,-2.833334 h -3.166667 q -0.5,0 -0.5,-0.5 V 37.06185 q 0,-0.5 0.5,-0.5 h 4.458333 q 5.208334,0 7.333334,-0.416667 2.125,-0.458334 2.041667,-0.458334 0.625,0 0.625,0.875001 0,-0.08333 -0.375,20.208333 -0.333334,20.250001 -0.333334,21.875001 0,10.833334 1.791667,10.833334 h 6.5 q 0.416667,0 0.416667,0.416666 z" />
+    </g>
+  </g>
+</svg>

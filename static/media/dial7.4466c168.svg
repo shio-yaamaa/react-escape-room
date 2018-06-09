@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<svg
+   xmlns:dc="http://purl.org/dc/elements/1.1/"
+   xmlns:cc="http://creativecommons.org/ns#"
+   xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#"
+   xmlns:svg="http://www.w3.org/2000/svg"
+   xmlns="http://www.w3.org/2000/svg"
+   width="69"
+   height="81"
+   viewBox="0 0 18.25625 21.431251"
+   version="1.1"
+   id="svg8">
+  <defs
+     id="defs2" />
+  <metadata
+     id="metadata5">
+    <rdf:RDF>
+      <cc:Work
+         rdf:about="">
+        <dc:format>image/svg+xml</dc:format>
+        <dc:type
+           rdf:resource="http://purl.org/dc/dcmitype/StillImage" />
+        <dc:title></dc:title>
+      </cc:Work>
+    </rdf:RDF>
+  </metadata>
+  <g
+     id="layer1"
+     transform="translate(0,-275.56873)">
+    <g
+       id="flowRoot4485"
+       style="font-style:normal;font-weight:normal;font-size:48px;line-height:1.25;font-family:sans-serif;letter-spacing:0px;word-spacing:0px;fill:#000000;fill-opacity:1;stroke:none"
+       transform="matrix(0.26458333,0,0,0.26458333,1.9090998,268.87715)"
+       aria-label="7">
+      <path
+         id="path4502"
+         style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:85.33333588px;font-family:'Californian FB';-inkscape-font-specification:'Californian FB'"
+         d="m 45.284506,37.478516 q 0,0.791667 -0.5,1.541667 -1.625,2.416667 -7.666667,11.375 -4.625,6.833334 -8.625,15.125001 -4.125,8.416667 -5.541667,14.125 -1.375,5.375 -1.375,9.916667 0,1.375 0.125,3.125 0.125,1.791667 0.125,1.791667 0,1.208333 -0.5,1.208333 -0.166666,0 -0.458333,-0.04167 -0.25,-0.04167 -0.333333,-0.04167 -3.208334,-1.5 -4.250001,-2.541667 -0.5,-0.541666 -0.5,-1.625 0,-2.416667 1.083334,-7.791667 1.208333,-5.666667 4.458333,-12.625 4.125,-8.791667 11.250001,-18.916667 2.708333,-3.541667 6.166666,-8.208334 0.666667,-1 0.666667,-1.291667 0,-0.416666 -0.791667,-0.291666 -0.166666,0 -0.333333,0.04167 -6.458333,1.375 -16.208334,1.375 -7.5,0 -11.875,-1.291666 -0.9166667,-0.375 -0.9166667,-0.75 0,-0.08333 0.375,-0.916667 0.3749997,-0.833333 0.9999997,-2.166667 0.375,-0.791666 0.916667,-2.041666 0.291667,-0.666667 0.875,-0.666667 0.25,0 2.125,0.5 5.625,1.541667 14.500001,1.541667 2.791666,0 8.083333,-0.625 4.291667,-0.541667 5.25,-0.75 0.708334,-0.166667 1.791667,-0.166667 1.083333,0 1.083333,1.083333 z" />
+    </g>
+  </g>
+</svg>
