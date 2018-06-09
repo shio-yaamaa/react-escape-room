@@ -17,7 +17,7 @@ to start the development server
 			<LoadScreen>
 			<div> // fade
 
-			<Game container> // manages functions that related to the whole game, like save, hint, and cursor
+			<Game container> // manages functions related to the whole game, like save, hint, and cursor
 				<div> // aligns MainScreen and Sidebar horizontally
 					<MainScreen container> // handles click events on MainViewMap, ArrowArea, and ItemDetailWindow
 						<MainView>
@@ -37,70 +37,41 @@ to start the development server
 				<div> // save-effect
 ```
 
-# Data
+# Files that have to be changed or added when creating a new scenario
 
-perspectiveとitem名はファイル名にもなるからcamel caseにする。
+## Assets
 
-actionsはcontainer componentがMainScreenにpropとして渡す？
-そしたら、actionの中にthis.changeStatus('door', 'UNLOCKED')とかthis.obtainItem('driver')とかthis.useItem('doorKey')って感じで自分とこの関数を渡せる。
+assets/images/
 
-```javascript
-actions = [
-	{
-		perspective: ,
-		location: 'LEFT', // string indicating arrow or color of the clickable map
-		action: (state) => {
-			changePerspective(newPerspective);
-		}
-	},
-	{
-		perspective: ,
-		location: 'BLACK', // suppose it's a door that needs its key
-		action: (state) => {
-			switch (state.status.door) {
-				case 'LOCKED':
-					if (selectedItem === 'DOOR_KEY') {
-						changeState(status.door, 'UNLOCKED');
-						changeState(items.doorKey.obtainStatus, 'USED');
-						playSE('doorUnlocked.mp3');
-					} else {
-						playSE('doorLocked.mp3');
-					}
-					break;
-				case 'UNLOCKED':
-					changeState(status.door, 'OPEN');
-					break;
-				case 'OPEN':
-					// proceed to the clear screen
-					break;
-			}
-		}
-	}
-];
-```
+- items: item images shown in the ItemFrames
 
-# State
+- itemDetails: item images shown in the ItemDetailWindow
 
-```javascript
-{
-	status: {
-		door: 'LOCKED',
-		picture: 'SCREWED'
-	},
-	perspective: 'desk',
-	items: {
-		driver: {
-			obtainStatus: 'USED',
-			frameIndex: -1
-		},
-		drawerKey: {
-			obtainStatus: 'OBTAINED',
-			frameIndex: 0
-		}
-	}
-	selectedItem: 'drawerKey' // 個別に設定してたら、他のが選ばれたときに前のを解除しなければいけない
-}
-```
+- itemDetailMaps: the clickable maps of the ItemDetailWindow
+
+- mainViews: the scene image shown in the MainView
+
+- mainViewOverlays: the images shown in addition to the mainViews. things whose visibility depend on the state
+
+- mainViewMaps: the clickable maps of the mainViews
+
+- endScreenBackground: the background image of the end screen
+
+assets/sounds: sounds played in the game after AssetsLoader runs
+
+## Programs
+
+redux/modules/
+
+- items: the state of the items
+
+- itemStatus: the status of the items in the ItemDetailWindow
+
+- status: the status of the game
+
+## Others
+
+If overlaps on the MainView or on the ItemDetailWindow during motion is needed, create a new component.
 
 # Style
 
@@ -116,13 +87,11 @@ npmはちょっとでもアップデートしたらnextick-argsみたいなや�
 
 # Todo
 
+- loading progress
+
 - switch languages
 
-- If expanding is disabled on smartphones, can sequencial taps be recognized?
-
 - The file with error is automatically opened even if the error occurred on smartphones!
-
-- Can JavaScript embedded in Hatena blog articles?
 
 # Bugs
 
@@ -142,11 +111,11 @@ To avoid antialiasing, which creates invalid colors between two colors, use GIMP
 
 ## How to retain the content of hint
 
-Retain only inHintVisible as a state, and calculate the content every time the hint gets visible. It's because nothing can provide the whole state though it's required to calculate the content of the hint.
+Retain only isHintVisible as a state, and calculate the content every time the hint gets visible. It's because nothing can provide the whole state though it's required to calculate the content of the hint.
 
 ## svg files for dial numbers
 
-They aren't displayed unless the number objects are converted into normal path.
+They aren't displayed unless the text objects are converted into normal path.
 
 ## Is loading screen necessary?
 
@@ -154,7 +123,7 @@ Definitely yes. Without it, I have to deal with the situation in which the MainV
 
 ## Don't retain save as a state
 
-Save a event rather than a state. It's weird to update the state when the save event ends.
+Saving is an event rather than a state. It's weird to update the state when the save event ends.
 
 ## Component/container structure
 
